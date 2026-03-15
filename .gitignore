@@ -1,0 +1,6 @@
+# CodeIgniter 4 için standart engellemeler
+/vendor/
+/writable/*
+!.gitignore
+.env
+public/uploads/*
