@@ -42,26 +42,26 @@
                 <div class="col-lg-6 ps-lg-0">
                     <div class="login_form_inner bg-white">
                         <h3>Giriş Yap</h3>
-                        
-                        <form class="row login_form" action="#" method="post" id="contactForm">
-                            <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="kullanici_adi" name="kullanici_adi" placeholder="Kullanıcı Adı" required>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <input type="password" class="form-control" id="sifre" name="sifre" placeholder="Şifre" required>
-                            </div>
-                            <div class="col-md-12 form-group d-flex align-items-center">
-                                <div class="creat_account mb-0">
-                                    <input type="checkbox" id="f-option2" name="selector">
-                                    <label for="f-option2" class="mb-0">Beni Hatırla</label>
-                                </div>
-                            </div>
-                            <div class="col-md-12 form-group text-center mt-4">
-                                <button type="submit" value="submit" class="button button-login w-100">Giriş Yap</button>
-                                <a href="#" class="d-block mt-3 text-muted text-decoration-none">Şifremi Unuttum</a>
-                            </div>
-                        </form>
+                    
 
+<?php if (session()->getFlashdata('hata')): ?>
+    <div class="alert alert-danger">
+        <?= session()->getFlashdata('hata') ?>
+    </div>
+<?php endif; ?>
+
+<form action="<?= site_url('login-kontrol') ?>" method="post">
+                      <form action="<?= site_url('login-kontrol') ?>" method="post">
+                        <div class="col-md-12 form-group">
+                         <input type="email" class="form-control" name="eposta" placeholder="E-posta" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                          <input type="password" class="form-control" name="sifre" placeholder="Şifre" required>
+                        </div>
+                        <div class="col-md-12 form-group text-center mt-4">
+                         <button type="submit" class="button button-login w-100">Giriş Yap</button>
+                         </div>
+                        </form>
                     </div>
                 </div>
 

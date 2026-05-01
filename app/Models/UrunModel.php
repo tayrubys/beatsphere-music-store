@@ -12,5 +12,10 @@ class UrunModel extends Model
     protected $primaryKey = 'id';
     
     // Kod üzerinden hangi sütunlara veri ekleyip silebileceğimize izin veriyoruz
-    protected $allowedFields = ['kategori_id', 'album_adi', 'sanatci', 'fiyat', 'stok', 'resim', 'durum'];
+    protected $allowedFields = ['kategori_id', 'album_adi', 'sanatci', 'fiyat', 'stok', 'resim', 'durum','populer'];
+    public function kategoriyeGoreUrunler($kategori_id){
+        return $this->where('kategori_id', $kategori_id)
+                    ->where('durum', 1)
+                    ->findAll();
+    }
 }

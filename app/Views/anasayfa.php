@@ -64,23 +64,22 @@
                 </div>
 
                 <div class="row">
-                    <?php for($i=1; $i<=8; $i++): ?>
+                    <?php  foreach($urunler as $urun):?>
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div class="card text-center card-product">
                             <div class="card-product__img">
-                                <div class="placeholder-img shadow-sm">
-                                    <i class="fa-solid fa-music fa-3x"></i>
-                                </div>
+                            <img src="<?= esc($urun['resim']) ?>" 
+                              style="width:250px; height:250px; object-fit:cover;">
                             </div>
                             <div class="card-body p-0">
-                                <p class="text-muted mb-1">Sanatçı Adı</p>
-                                <h5 class="fw-bold text-dark">Albüm Adı</h5>
-                                <p class="text-primary fw-bold">0.00 ₺</p>
+                                <p class="text-muted mb-1"><?= esc($urun['sanatci']) ?></p>
+                                <h5 class="fw-bold text-dark"><?= esc($urun['album_adi']) ?></h5>
+                                <p class="text-primary fw-bold"><?= number_format($urun['fiyat'], 2) ?> ₺</p>
                                 <button class="btn btn-sm btn-outline-primary w-100 rounded-pill">Sepete Ekle</button>
                             </div>
                         </div>
                     </div>
-                    <?php endfor; ?>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </section>

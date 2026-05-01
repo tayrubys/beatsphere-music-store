@@ -17,3 +17,5 @@ $routes->get('iletisim','Home::iletisim');
 $routes->get('/login', 'Auth::login');
 $routes->post('/login-kontrol', 'Auth::loginKontrol');
 $routes->get('/logout', 'Auth::logout');
+$routes->get('/admin', 'Admin::index');
+$routes->get('/kategori/(:num)', 'UrunController::kategori/$1');

@@ -18,6 +18,12 @@
         .nav-shop button:hover { color: #007bff; }
         .nav-shop__circle { position: absolute; top: -8px; right: -10px; background: #007bff; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold;}
         
+.card-product:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
         /* Footer Özelleştirmeleri */
         .footer { background-color: #222; color: #ccc; padding-top: 50px; }
         .footer h4 { color: #fff; margin-bottom: 20px; font-size: 1.2rem; }
@@ -48,16 +54,14 @@
                         <ul class="nav navbar-nav menu_nav mx-auto">
                             <li class="nav-item mx-2"><a class="nav-link" href="<?= base_url() ?>">Ana Sayfa</a></li>
                             <li class="nav-item mx-2"><a class="nav-link" href="<?= base_url('hakkimizda') ?>">Hakkımızda</a></li>
-                            
                             <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Ürünlerimiz</a>
-                                <ul class="dropdown-menu border-0 shadow-sm">
-                                    <li><a class="dropdown-item" href="#">Pop</a></li>
-                                    <li><a class="dropdown-item" href="#">Rock</a></li>
-                                    <li><a class="dropdown-item" href="#">R&B</a></li>
-                                    <li><a class="dropdown-item" href="#">K-pop</a></li> 
-                                   
-                                </ul>
+                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Ürünlerimiz</a>
+                             <ul class="dropdown-menu border-0 shadow-sm">
+                              <li><a class="dropdown-item" href="<?= site_url('kategori/1') ?>">Pop</a></li>
+                              <li><a class="dropdown-item" href="<?= site_url('kategori/2') ?>">Rock</a></li>
+                              <li><a class="dropdown-item" href="<?= site_url('kategori/3') ?>">R&B</a></li>
+                              <li><a class="dropdown-item" href="<?= site_url('kategori/4') ?>">K-pop</a></li> 
+                             </ul>
                             </li>
                             <li class="nav-item mx-2"><a class="nav-link" href="<?= base_url('iletisim') ?>">İletişim</a></li>
                             <li class="nav-item mx-2"><a class="nav-link" href="<?= base_url('kargo_takip') ?>">Kargo Takip</a></li>

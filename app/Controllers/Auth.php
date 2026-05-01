@@ -13,6 +13,8 @@ class Auth extends BaseController
 
     public function loginKontrol()
     {
+        
+
         $eposta = $this->request->getPost('eposta'); //epostayı alıyor
         $sifre = $this->request->getPost('sifre');
 

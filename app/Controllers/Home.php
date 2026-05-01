@@ -7,14 +7,15 @@ class Home extends BaseController
 {
     public function index()
     {
-        // 1. Modelimizi çalıştırıyoruz
         $urunModel = new UrunModel();
-        
-        // 2. Veritabanındaki tüm ürünleri çekip 'urunler' adında bir pakete koyuyoruz
-        $veri['urunler'] = $urunModel->findAll();
-        
-        // 3. Bu paketi 'anasayfa' isimli tasarıma (View) gönderiyoruz
-        return view('anasayfa', $veri);
+
+    $veri['urunler'] = $urunModel
+        ->where('durum', 'satista')
+        ->where('populer', 1)
+        ->limit(12)
+        ->findAll();
+
+    return view('anasayfa', $veri);
     }
     public function hakkimizda()
     {
@@ -29,23 +30,53 @@ class Home extends BaseController
         return view('register');
     }
     public function profil(){
+      if (!session()->get('giris_yapildi')) {
+        return redirect()->to('/login');
+      }
         return view('profil');
     }
     public function sepet()
     {
+      if (!session()->get('giris_yapildi')) {
+        return redirect()->to('/login');
+      }
         return view('sepet');
     }
     public function odeme(){
+      if (!session()->get('giris_yapildi')) {
+        return redirect()->to('/login');
+      }
         return view('odeme');
     }
-    public function anasayfa(){
-        return view('anasayfa');
-    }
+   /* public function anasayfa()
+    {
+      $urunModel = new \App\Models\UrunModel();
+
+      $data['urunler'] = $urunModel
+        ->where('durum', 'satista')
+        ->where('populer', 1)
+        ->limit(12)
+        ->findAll();
+
+      return view('anasayfa', $data);
+    }*/
     public function kargo_takip(){
+      if (!session()->get('giris_yapildi')) {
+        return redirect()->to('/login');
+      }
         return view('kargo_takip');
     }
      public function iletisim(){
         return view('iletisim');
     }
+    public function kategori($kategori_id){
+       $urunModel = new \App\Models\UrunModel();
 
+       $data['urunler'] = $urunModel
+        ->where('durum', 'satista')
+        ->where('kategori_id', $kategori_id)
+        ->findAll();
+
+     return view('kategori_urunleri', $data);
+    }
 }
