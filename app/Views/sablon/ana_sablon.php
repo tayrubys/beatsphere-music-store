@@ -77,28 +77,63 @@
                            <ul class="nav-shop d-flex align-items-center list-unstyled mb-0">
 
         <li class="nav-item dropdown ms-3">
-            <button data-bs-toggle="dropdown" aria-expanded="false" title="Hesabım" style="background: none; border: none; font-size: 1.2rem; color: #333;">
-                <i class="fa-solid fa-user"></i>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end border-0 shadow mt-3" style="min-width: 200px; border-radius: 10px;">
-                <li>
-                    <a class="dropdown-item py-2" href="<?= base_url('login') ?>">
-                        <i class="fa-solid fa-right-to-bracket me-2 text-muted"></i> Giriş Yap
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item py-2" href="<?= base_url('register') ?>">
-                        <i class="fa-solid fa-user-plus me-2 text-muted"></i> Kayıt Ol
-                    </a>
-                </li>
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                    <a class="dropdown-item py-2 fw-bold" href="<?= base_url('profil') ?>" style="color: #141E30;">
-                        <i class="fa-solid fa-id-card me-2"></i> Profilim / Hesabım
-                    </a>
-                </li>
-            </ul>
-        </li>
+    <button data-bs-toggle="dropdown"
+            aria-expanded="false"
+            title="Hesabım"
+            style="background: none; border: none; font-size: 1.2rem; color: #333;">
+        <i class="fa-solid fa-user"></i>
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-end border-0 shadow mt-3"
+        style="min-width: 220px; border-radius: 10px;">
+
+        <?php if (session()->get('giris_yapildi')): ?>
+
+            <li>
+                <span class="dropdown-item-text text-muted py-2">
+                    Merhaba, <?= esc(session()->get('ad_soyad')) ?>
+                </span>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li>
+                <a class="dropdown-item py-2 fw-bold"
+                   href="<?= base_url('profil') ?>"
+                   style="color: #141E30;">
+                    <i class="fa-solid fa-id-card me-2"></i>
+                    Profilim / Hesabım
+                </a>
+            </li>
+
+            <li>
+                <a class="dropdown-item py-2 text-danger"
+                   href="<?= base_url('logout') ?>">
+                    <i class="fa-solid fa-right-from-bracket me-2"></i>
+                    Çıkış Yap
+                </a>
+            </li>
+
+        <?php else: ?>
+
+            <li>
+                <a class="dropdown-item py-2" href="<?= base_url('login') ?>">
+                    <i class="fa-solid fa-right-to-bracket me-2 text-muted"></i>
+                    Giriş Yap
+                </a>
+            </li>
+
+            <li>
+                <a class="dropdown-item py-2" href="<?= base_url('register') ?>">
+                    <i class="fa-solid fa-user-plus me-2 text-muted"></i>
+                    Kayıt Ol
+                </a>
+            </li>
+
+        <?php endif; ?>
+
+    </ul>
+</li>
     </ul>
                         </ul>
                     </div>
