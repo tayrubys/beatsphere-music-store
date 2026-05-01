@@ -17,4 +17,39 @@ class UrunController extends BaseController
 
         return view('kategori_urunleri', $data);
     }
+    /*public function detay($id){
+       $urunModel = new \App\Models\UrunModel();
+
+       $urun = $urunModel->find($id);
+
+       if (!$urun) {
+          throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+      $data['urun'] = $urun;
+
+      return view('urun_detay', $data);
+    }*/
+      public function detay($id)
+{
+    $urunModel = new \App\Models\UrunModel();
+
+    $urun = $urunModel->find($id);
+
+    if (!$urun) {
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+
+    $benzerUrunler = $urunModel
+        ->where('kategori_id', $urun['kategori_id'])
+        ->where('id !=', $id)
+        ->where('durum', 'satista')
+        ->limit(4)
+        ->findAll();
+
+    $data['urun'] = $urun;
+    $data['benzerUrunler'] = $benzerUrunler;
+
+    return view('urun_detay', $data);
+}
 }

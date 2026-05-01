@@ -1,0 +1,221 @@
+
+.detay-wrapper {
+    max-width: 1120px;
+    margin: auto;
+}
+
+/* ÜST ANA ALAN */
+.urun-detay-card {
+    background: #fff;
+    border: 1px solid #eeeeee;
+    border-radius: 18px;
+    padding: 28px;
+}
+
+/* SOL RESİM */
+.urun-img-box {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+}
+
+.urun-img {
+    width: 100%;
+    max-width: 340px;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 14px;
+}
+
+/* SAĞ BİLGİ */
+.urun-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 6px;
+}
+
+.urun-artist {
+    font-size: 17px;
+    color: #6c757d;
+    margin-bottom: 16px;
+}
+
+.urun-price {
+    font-size: 28px;
+    font-weight: 700;
+    color: #4054f4;
+    margin-bottom: 14px;
+}
+
+.urun-meta {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.urun-meta strong {
+    display: inline-block;
+    width: 92px;
+    color: #333;
+}
+
+.stok-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.stok-var {
+    background: #e7f7ed;
+    color: #198754;
+}
+
+.stok-yok {
+    background: #fdecec;
+    color: #dc3545;
+}
+
+.urun-aciklama {
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+    padding: 18px 0;
+    margin: 20px 0;
+    color: #666;
+    line-height: 1.7;
+}
+
+.adet-input {
+    width: 95px;
+    height: 42px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.detay-btn {
+    height: 44px;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 0 26px;
+}
+
+/* ÜRÜN ÖZELLİKLERİ */
+.ozellik-card {
+    margin-top: 34px;
+    background: #fff;
+    border: 1px solid #eeeeee;
+    border-radius: 18px;
+    padding: 24px;
+}
+
+.ozellik-title {
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.ozellik-table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.ozellik-table tr {
+    border-bottom: 1px solid #eeeeee;
+}
+
+.ozellik-table tr:last-child {
+    border-bottom: none;
+}
+
+.ozellik-table td {
+    padding: 13px 8px;
+    color: #555;
+}
+
+.ozellik-table td:first-child {
+    width: 35%;
+    font-weight: 600;
+    color: #333;
+}
+
+/* BENZER ÜRÜNLER */
+.benzer-section {
+    margin-top: 38px;
+}
+
+.benzer-title {
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.benzer-card {
+    border: 1px solid #eeeeee;
+    border-radius: 15px;
+    padding: 12px;
+    height: 100%;
+    background: #fff;
+    transition: 0.2s;
+}
+
+.benzer-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.benzer-img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.benzer-artist {
+    font-size: 14px;
+    color: #777;
+    margin: 10px 0 3px;
+}
+
+.benzer-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: #222;
+    min-height: 38px;
+}
+
+.benzer-price {
+    font-weight: 700;
+    color: #4054f4;
+    margin-top: 6px;
+}
+
+/* MOBİL */
+@media (max-width: 768px) {
+    .urun-detay-card {
+        padding: 20px;
+    }
+
+    .urun-img {
+        height: 300px;
+    }
+
+    .urun-title {
+        font-size: 24px;
+        margin-top: 22px;
+    }
+
+    .urun-price {
+        font-size: 25px;
+    }
+
+    .ozellik-table td:first-child {
+        width: 45%;
+    }
+
+    .detay-btn {
+        width: 100%;
+    }
+}

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
+<?= $this->renderSection('css') ?>
     <style>
         /* Navbar ve Buton Özelleştirmeleri */
         .navbar-brand { font-weight: bold; font-size: 1.5rem; color: #333 !important; }
@@ -18,11 +18,12 @@
         .nav-shop button:hover { color: #007bff; }
         .nav-shop__circle { position: absolute; top: -8px; right: -10px; background: #007bff; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold;}
         
-.card-product:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    transition: 0.3s;
-}
+        .card-product:hover {
+         transform: translateY(-10px);
+         box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+         transition: 0.3s;
+        }
+        
 
         /* Footer Özelleştirmeleri */
         .footer { background-color: #222; color: #ccc; padding-top: 50px; }

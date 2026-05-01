@@ -68,14 +68,27 @@
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div class="card text-center card-product">
                             <div class="card-product__img">
-                            <img src="<?= esc($urun['resim']) ?>" 
-                              style="width:250px; height:250px; object-fit:cover;">
+                                <a href="<?= base_url('urun/' . $urun['id']) ?>">
+                                    <img src="<?= esc($urun['resim']) ?>"
+                                    style="width:250px; height:250px; object-fit:cover;">
+                                </a>
                             </div>
                             <div class="card-body p-0">
                                 <p class="text-muted mb-1"><?= esc($urun['sanatci']) ?></p>
                                 <h5 class="fw-bold text-dark"><?= esc($urun['album_adi']) ?></h5>
                                 <p class="text-primary fw-bold"><?= number_format($urun['fiyat'], 2) ?> ₺</p>
-                                <button class="btn btn-sm btn-outline-primary w-100 rounded-pill">Sepete Ekle</button>
+                                <form action="<?= base_url('sepete-ekle') ?>" method="post">
+    <?= csrf_field() ?>
+
+    <input type="hidden" name="urun_id" value="<?= esc($urun['id']) ?>">
+    <input type="hidden" name="adet" value="1">
+
+    <button type="submit"
+            class="btn btn-sm btn-outline-primary w-100 rounded-pill"
+            <?= $urun['stok'] <= 0 ? 'disabled' : '' ?>>
+        <?= $urun['stok'] <= 0 ? 'Stok Yok' : 'Sepete Ekle' ?>
+    </button>
+</form>
                             </div>
                         </div>
                     </div>

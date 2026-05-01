@@ -34,9 +34,18 @@
                                 <?= number_format($urun['fiyat'], 2) ?> ₺
                             </p>
 
-                            <button class="btn btn-sm btn-outline-primary w-100 rounded-pill">
-                                Sepete Ekle
-                            </button>
+ <form action="<?= base_url('sepete-ekle') ?>" method="post">
+    <?= csrf_field() ?>
+
+    <input type="hidden" name="urun_id" value="<?= esc($urun['id']) ?>">
+    <input type="hidden" name="adet" value="1">
+
+    <button type="submit"
+            class="btn btn-sm btn-outline-primary w-100 rounded-pill"
+            <?= $urun['stok'] <= 0 ? 'disabled' : '' ?>>
+        <?= $urun['stok'] <= 0 ? 'Stok Yok' : 'Sepete Ekle' ?>
+    </button>
+</form>                           
                         </div>
 
                     </div>
