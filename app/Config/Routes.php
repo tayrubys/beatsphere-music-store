@@ -7,7 +7,6 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('hakkimizda', 'Home::hakkimizda');
-$routes->get('login', 'Home::login');
 $routes->get('register', 'Home::register');
 $routes->get('profil','Home::profil');
 $routes->get('sepet','Home::sepet');
@@ -15,3 +14,6 @@ $routes->get('odeme','Home::odeme');
 $routes->get('anasayfa','Home::anasayfa');
 $routes->get('kargo_takip','Home::kargo_takip');
 $routes->get('iletisim','Home::iletisim');
+$routes->get('/login', 'Auth::login');
+$routes->post('/login-kontrol', 'Auth::loginKontrol');
+$routes->get('/logout', 'Auth::logout');
