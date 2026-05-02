@@ -356,13 +356,18 @@
                                 Hesabınızı dondurduğunuzda hesabınız pasif hale gelir ve tekrar giriş yapamazsınız.
                             </div>
 
-                            <button class="btn btn-danger" disabled>
-                                Hesabımı Dondur
-                            </button>
+                            <form action="<?= base_url('hesap-dondur') ?>" method="post"
+      onsubmit="return confirm('Hesabınızı dondurmak istediğinize emin misiniz? Bu işlemden sonra tekrar giriş yapamazsınız.');">
 
-                            <p class="text-muted small mt-3 mb-0">
-                                Bu özellik bir sonraki adımda aktif hale getirilecek.
-                            </p>
+    <button type="submit" class="btn btn-danger">
+        Hesabımı Dondur
+    </button>
+
+</form>
+
+<p class="text-muted small mt-3 mb-0">
+    Hesabınızı dondurduğunuzda hesabınız pasif hale gelir ve tekrar giriş yapamazsınız.
+</p>
 
                         </div>
 

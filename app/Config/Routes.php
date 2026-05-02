@@ -21,6 +21,7 @@ $routes->post('/login-kontrol', 'Auth::loginKontrol');
 $routes->get('/logout', 'Auth::logout');
 $routes->post('profil-guncelle', 'ProfilController::profilGuncelle');
 $routes->post('sifre-guncelle', 'ProfilController::sifreGuncelle');
+$routes->post('hesap-dondur', 'ProfilController::hesapDondur');
 
 //admin
 $routes->get('/admin', 'Admin::index');

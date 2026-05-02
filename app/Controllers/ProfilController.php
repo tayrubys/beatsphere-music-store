@@ -91,4 +91,23 @@ class ProfilController extends BaseController
 
         return redirect()->to('/profil')->with('basari', 'Şifreniz başarıyla güncellendi.');
     }
+
+    public function hesapDondur()
+{
+    if (!session()->get('giris_yapildi')) {
+        return redirect()->to('/login')->with('hata', 'Bu işlem için giriş yapmalısınız.');
+    }
+
+    $kullaniciId = session()->get('kullanici_id');
+
+    $model = new KullaniciModel();
+
+    $model->update($kullaniciId, [
+        'durum' => 'pasif'
+    ]);
+
+    session()->destroy();
+
+    return redirect()->to('/login')->with('hata', 'Hesabınız donduruldu. Artık giriş yapamazsınız.');
+}
 }
