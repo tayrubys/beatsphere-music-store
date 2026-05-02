@@ -19,6 +19,8 @@ $routes->get('profil','Home::profil');
 $routes->get('/login', 'Auth::login');
 $routes->post('/login-kontrol', 'Auth::loginKontrol');
 $routes->get('/logout', 'Auth::logout');
+$routes->post('profil-guncelle', 'ProfilController::profilGuncelle');
+$routes->post('sifre-guncelle', 'ProfilController::sifreGuncelle');
 
 //admin
 $routes->get('/admin', 'Admin::index');

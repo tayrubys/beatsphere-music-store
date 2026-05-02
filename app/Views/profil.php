@@ -98,6 +98,18 @@
             <div class="card profil-card">
                 <div class="card-body p-4">
 
+                    <?php if (session()->getFlashdata('hata')): ?>
+                        <div class="alert alert-danger">
+                            <?= session()->getFlashdata('hata') ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (session()->getFlashdata('basari')): ?>
+                        <div class="alert alert-success">
+                            <?= session()->getFlashdata('basari') ?>
+                        </div>
+                    <?php endif; ?>
+
                     <div class="tab-content" id="v-pills-tabContent">
 
                         <!-- PROFİL BİLGİLERİ -->
@@ -109,41 +121,60 @@
                                 Profil Bilgileri
                             </h4>
 
-                            <div class="row">
+                            <form action="<?= base_url('profil-guncelle') ?>" method="post">
 
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Ad Soyad</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           value="<?= esc(session()->get('ad_soyad')) ?>"
-                                           readonly>
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Ad Soyad</label>
+                                        <input type="text"
+                                               name="ad_soyad"
+                                               class="form-control"
+                                               value="<?= esc($kullanici['ad_soyad']) ?>"
+                                               required>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">E-Posta</label>
+                                        <input type="email"
+                                               name="eposta"
+                                               class="form-control"
+                                               value="<?= esc($kullanici['eposta']) ?>"
+                                               required>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Telefon</label>
+                                        <input type="text"
+                                               name="telefon"
+                                               class="form-control"
+                                               value="<?= esc($kullanici['telefon']) ?>"
+                                               required>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Kullanıcı Rolü</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               value="<?= esc($kullanici['rol']) ?>"
+                                               readonly>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">Adres</label>
+                                        <textarea name="adres"
+                                                  class="form-control"
+                                                  rows="3"
+                                                  required><?= esc($kullanici['adres']) ?></textarea>
+                                    </div>
+
                                 </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">E-Posta</label>
-                                    <input type="email"
-                                           class="form-control"
-                                           value="<?= esc(session()->get('eposta')) ?>"
-                                           readonly>
-                                </div>
+                                <button type="submit" class="btn btn-primary mt-2">
+                                    Bilgileri Güncelle
+                                </button>
 
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Kullanıcı Rolü</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           value="<?= esc(session()->get('rol')) ?>"
-                                           readonly>
-                                </div>
-
-                            </div>
-
-                            <button class="btn btn-primary mt-2" disabled>
-                                Bilgileri Güncelle
-                            </button>
-
-                            <p class="text-muted small mt-3 mb-0">
-                                Bu alan daha sonra kullanıcı bilgisi güncelleme için aktif hale getirilebilir.
-                            </p>
+                            </form>
 
                         </div>
 
@@ -171,7 +202,7 @@
                             </div>
 
                             <p class="text-muted small mt-3">
-                                Sipariş iptal sistemi yapıldığında, iade tutarları bu cüzdana eklenecek.
+                                Sipariş iptal edildiğinde iade tutarı bu cüzdana eklenir. Yeni alışverişlerde önce cüzdan bakiyesi kullanılır.
                             </p>
 
                         </div>
@@ -249,8 +280,8 @@
 
                                                     <td>
                                                         <a href="<?= base_url('siparis-detay/' . $siparis['id']) ?>"
-                                                            class="btn btn-sm btn-outline-primary">
-                                                              Detay
+                                                           class="btn btn-sm btn-outline-primary">
+                                                            Detay
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -278,28 +309,37 @@
                                 Şifre Değiştir
                             </h4>
 
-                            <div class="mb-3">
-                                <label class="form-label">Mevcut Şifre</label>
-                                <input type="password" class="form-control">
-                            </div>
+                            <form action="<?= base_url('sifre-guncelle') ?>" method="post">
 
-                            <div class="mb-3">
-                                <label class="form-label">Yeni Şifre</label>
-                                <input type="password" class="form-control">
-                            </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Mevcut Şifre</label>
+                                    <input type="password"
+                                           name="mevcut_sifre"
+                                           class="form-control"
+                                           required>
+                                </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Yeni Şifre Tekrar</label>
-                                <input type="password" class="form-control">
-                            </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Yeni Şifre</label>
+                                    <input type="password"
+                                           name="yeni_sifre"
+                                           class="form-control"
+                                           required>
+                                </div>
 
-                            <button class="btn btn-primary" disabled>
-                                Şifreyi Güncelle
-                            </button>
+                                <div class="mb-3">
+                                    <label class="form-label">Yeni Şifre Tekrar</label>
+                                    <input type="password"
+                                           name="yeni_sifre_tekrar"
+                                           class="form-control"
+                                           required>
+                                </div>
 
-                            <p class="text-muted small mt-3 mb-0">
-                                Bu alan daha sonra şifre güncelleme sistemi için aktif hale getirilebilir.
-                            </p>
+                                <button type="submit" class="btn btn-primary">
+                                    Şifreyi Güncelle
+                                </button>
+
+                            </form>
 
                         </div>
 
@@ -313,7 +353,7 @@
                             </h4>
 
                             <div class="alert alert-warning">
-                                Hesabınızı dondurduğunuzda alışveriş ve sipariş işlemleri pasif hale getirilebilir.
+                                Hesabınızı dondurduğunuzda hesabınız pasif hale gelir ve tekrar giriş yapamazsınız.
                             </div>
 
                             <button class="btn btn-danger" disabled>
@@ -321,7 +361,7 @@
                             </button>
 
                             <p class="text-muted small mt-3 mb-0">
-                                Bu özellik daha sonra kullanıcı üyeliğini pasif etme kısmında tamamlanabilir.
+                                Bu özellik bir sonraki adımda aktif hale getirilecek.
                             </p>
 
                         </div>
