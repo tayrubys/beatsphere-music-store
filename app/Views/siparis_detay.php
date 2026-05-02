@@ -151,14 +151,33 @@
 
                         <hr>
 
-                        <div class="text-end">
-                            <h4 class="fw-bold">
-                                Genel Toplam:
-                                <span class="text-primary">
-                                    <?= number_format($siparis['toplam_tutar'], 2) ?> ₺
-                                </span>
-                            </h4>
-                        </div>
+                <div class="text-end mb-3">
+                  <h4 class="fw-bold">
+                      Genel Toplam:
+                  <span class="text-primary">
+                     <?= number_format($siparis['toplam_tutar'], 2) ?> ₺
+                  </span>
+                 </h4>
+                </div>
+
+            <div class="mt-4 p-3 border rounded-4 bg-light">
+              <h5 class="fw-bold mb-3">Ödeme Bilgileri</h5>
+
+            <div class="d-flex justify-content-between mb-2">
+               <span>Sipariş Toplamı:</span>
+                  <strong><?= number_format($siparis['toplam_tutar'], 2) ?> ₺</strong>
+            </div>
+
+            <div class="d-flex justify-content-between mb-2">
+              <span>Cüzdandan Kullanılan:</span>
+              <strong><?= number_format($siparis['bakiye_kullanilan'], 2) ?> ₺</strong>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span>Karttan / Diğer Ödeme:</span>
+                <strong><?= number_format($siparis['karttan_odenen'], 2) ?> ₺</strong>
+            </div>
+        </div>
 
                     <?php else: ?>
 

@@ -217,7 +217,10 @@
                             <span>Ara Toplam</span>
                             <strong><?= number_format($toplam, 2) ?> ₺</strong>
                         </div>
-
+                        <div class="alert alert-info mt-3 mb-2">
+                            <strong>Cüzdan Bakiyeniz:</strong>
+                            <?= number_format($kullanici['bakiye'], 2) ?> ₺
+                        </div>
                         <div class="d-flex justify-content-between mt-2">
                             <span>Kargo</span>
                             <strong>0.00 ₺</strong>

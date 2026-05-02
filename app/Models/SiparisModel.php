@@ -15,6 +15,8 @@ class SiparisModel extends Model
         'kargo_adresi',
         'odeme_yontemi',
         'durum',
-        'tarih'
+        'tarih',
+        'bakiye_kullanilan',
+        'karttan_odenen'
     ];
 }

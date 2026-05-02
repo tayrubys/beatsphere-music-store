@@ -162,7 +162,7 @@
                                     <p class="text-muted mb-1">Mevcut Hediye Bakiye</p>
 
                                     <h2 class="fw-bold mb-0">
-                                        0.00 ₺
+                                        <?= number_format($kullanici['bakiye'], 2) ?> ₺
                                     </h2>
                                 </div>
 

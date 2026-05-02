@@ -44,10 +44,14 @@ class Home extends BaseController
         ->orderBy('tarih', 'DESC')
         ->get()
         ->getResultArray();
-
-    return view('profil', [
-        'siparisler' => $siparisler
-    ]);
+      $kullanici = $db->table('kullanicilar')
+    ->where('id', $kullaniciId)
+    ->get()
+    ->getRowArray();
+  return view('profil', [
+    'siparisler' => $siparisler,
+    'kullanici' => $kullanici
+]);
    }
     public function sepet()
     {
