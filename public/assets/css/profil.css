@@ -1,0 +1,133 @@
+.profil-card {
+    border-radius: 18px;
+    border: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.profil-avatar {
+    color: #14263f;
+}
+
+.profil-isim {
+    color: #14263f;
+    font-weight: 700;
+}
+
+.profil-mail {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.profil-menu .nav-link {
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-weight: 500;
+    color: #14263f;
+    transition: all 0.25s ease;
+}
+
+.profil-menu .nav-link i {
+    margin-right: 8px;
+}
+
+.profil-menu .nav-link:hover {
+    background: #eef3f9;
+    color: #0d1b2f;
+}
+
+.profil-menu .nav-link.active {
+    background: linear-gradient(180deg, #0d1b2f 0%, #1c3557 100%);
+    color: #ffffff !important;
+    box-shadow: 0 10px 20px rgba(13, 27, 47, 0.18);
+}
+
+.profil-menu .nav-link.active i {
+    color: #ffffff;
+}
+
+.profil-menu .nav-link.text-danger {
+    color: #dc3545 !important;
+}
+
+.profil-menu .nav-link.text-danger:hover {
+    background: #fff1f1;
+}
+
+.profil-baslik {
+    color: #14263f;
+    font-weight: 700;
+    border-bottom: 1px solid #dfe5ec;
+    padding-bottom: 10px;
+    margin-bottom: 22px;
+}
+
+.cuzdan-box {
+    background: linear-gradient(180deg, #0d1b2f 0%, #1c3557 100%);
+    color: #ffffff;
+    border-radius: 18px;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cuzdan-box p {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.cuzdan-box i {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.siparis-table thead th {
+    background: #f4f7fb;
+    color: #14263f;
+    font-weight: 700;
+    border-bottom: 1px solid #dde5ee;
+}
+
+.siparis-table td {
+    vertical-align: middle;
+}
+
+.siparis-tutar {
+    color: #1c3557;
+    font-weight: 700;
+}
+
+.durum-beklemede,
+.durum-onaylandi,
+.durum-iptal,
+.durum-teslim,
+.durum-diger {
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.durum-beklemede {
+    background: #f4b400;
+    color: #1f1f1f;
+}
+
+.durum-onaylandi {
+    background: #0d6efd;
+    color: #ffffff;
+}
+
+.durum-iptal {
+    background: #dc3545;
+    color: #ffffff;
+}
+
+.durum-teslim {
+    background: #198754;
+    color: #ffffff;
+}
+
+.durum-diger {
+    background: #6c757d;
+    color: #ffffff;
+}

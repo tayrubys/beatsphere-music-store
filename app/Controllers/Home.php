@@ -29,12 +29,26 @@ class Home extends BaseController
     {
         return view('register');
     }
-    public function profil(){
-      if (!session()->get('giris_yapildi')) {
-        return redirect()->to('/login');
-      }
-        return view('profil');
+   public function profil()
+   {
+    if (!session()->get('giris_yapildi')) {
+        return redirect()->to('/login')->with('hata', 'Profil sayfasını görüntülemek için giriş yapmalısınız.');
     }
+
+    $kullaniciId = session()->get('kullanici_id');
+
+    $db = \Config\Database::connect();
+
+    $siparisler = $db->table('siparisler')
+        ->where('kullanici_id', $kullaniciId)
+        ->orderBy('tarih', 'DESC')
+        ->get()
+        ->getResultArray();
+
+    return view('profil', [
+        'siparisler' => $siparisler
+    ]);
+   }
     public function sepet()
     {
       if (!session()->get('giris_yapildi')) {
