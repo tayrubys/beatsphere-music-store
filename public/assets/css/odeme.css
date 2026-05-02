@@ -1,0 +1,76 @@
+.payment-option {
+    width: 100%;
+    cursor: pointer;
+}
+
+.payment-option input {
+    display: none;
+}
+
+.payment-box {
+    border: 1px solid #dee2e6;
+    border-radius: 14px;
+    padding: 18px 12px;
+    text-align: center;
+    background: #fff;
+    transition: 0.2s;
+    height: 100%;
+}
+
+.payment-box i {
+    font-size: 24px;
+    display: block;
+    margin-bottom: 8px;
+    color: #6c757d;
+}
+
+.payment-box span {
+    font-weight: 600;
+    color: #333;
+}
+
+.payment-option input:checked + .payment-box {
+    border-color: #0d6efd;
+    background: #eef5ff;
+    box-shadow: 0 8px 20px rgba(13, 110, 253, 0.12);
+}
+
+.payment-option input:checked + .payment-box i,
+.payment-option input:checked + .payment-box span {
+    color: #0d6efd;
+}
+
+.card-info-box {
+    border: 1px solid #e9ecef;
+    border-radius: 18px;
+    padding: 22px;
+    background: #fff;
+}
+
+.card-preview {
+    min-height: 180px;
+    border-radius: 20px;
+    padding: 24px;
+    background: linear-gradient(135deg, #141E30 0%, #243B55 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-preview small {
+    opacity: 0.75;
+    font-size: 12px;
+}
+
+.card-preview h5 {
+    letter-spacing: 2px;
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+.card-preview p {
+    margin-bottom: 0;
+    font-weight: 600;
+    letter-spacing: 1px;
+}

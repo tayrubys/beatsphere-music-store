@@ -1,4 +1,9 @@
 <?= $this->extend('sablon/ana_sablon') ?>
+
+<?= $this->section('css') ?>
+<link rel="stylesheet" href="<?= base_url('assets/css/odeme.css') ?>">
+<?= $this->endSection() ?>
+
 <?= $this->section('icerik') ?>
 
 <div class="container my-5">
@@ -35,24 +40,82 @@
 
                         <h5 class="fw-bold mt-4 mb-3">Ödeme Yöntemi</h5>
 
-                        <select name="odeme_yontemi" id="odeme_yontemi" class="form-select" required>
-                            <option value="">Ödeme yöntemi seçiniz</option>
-                            <option value="Kredi Kartı">Kredi Kartı</option>
-                            <option value="Banka Kartı">Banka Kartı</option>
-                            <option value="Kapıda Ödeme">Kapıda Ödeme</option>
-                        </select>
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+                                <label class="payment-option">
+                                    <input type="radio"
+                                           name="odeme_yontemi"
+                                           value="Kredi Kartı"
+                                           class="odeme-radio"
+                                           required>
+                                    <div class="payment-box">
+                                        <i class="fa-solid fa-credit-card"></i>
+                                        <span>Kredi Kartı</span>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="payment-option">
+                                    <input type="radio"
+                                           name="odeme_yontemi"
+                                           value="Banka Kartı"
+                                           class="odeme-radio"
+                                           required>
+                                    <div class="payment-box">
+                                        <i class="fa-solid fa-building-columns"></i>
+                                        <span>Banka Kartı</span>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="payment-option">
+                                    <input type="radio"
+                                           name="odeme_yontemi"
+                                           value="Kapıda Ödeme"
+                                           class="odeme-radio"
+                                           required>
+                                    <div class="payment-box">
+                                        <i class="fa-solid fa-truck-fast"></i>
+                                        <span>Kapıda Ödeme</span>
+                                    </div>
+                                </label>
+                            </div>
+
+                        </div>
 
                         <!-- KART BİLGİLERİ -->
-                        <div id="kart_bilgileri" class="mt-4">
+                        <div id="kart_bilgileri" class="card-info-box mt-4">
+
+                            <div class="card-preview mb-4">
+                                <div>
+                                    <small>Kart Numarası</small>
+                                    <h5 id="preview_kart_no">•••• •••• •••• ••••</h5>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-end">
+                                    <div>
+                                        <small>Kart Sahibi</small>
+                                        <p id="preview_isim">AD SOYAD</p>
+                                    </div>
+
+                                    <div>
+                                        <small>SKT</small>
+                                        <p id="preview_tarih">AA/YY</p>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="p-3 rounded-4 border bg-light mb-3">
                                 <div class="d-flex align-items-center gap-2 mb-1">
-                                    <i class="fa-solid fa-credit-card text-primary"></i>
-                                    <strong>Kart Bilgileri</strong>
+                                    <i class="fa-solid fa-lock text-success"></i>
+                                    <strong>Güvenli Kart Bilgileri</strong>
                                 </div>
 
                                 <small class="text-muted">
-                                    Bu alan demo amaçlıdır. Gerçek ödeme altyapısı kullanılmamaktadır.
+                                    Bu ödeme ekranı demo amaçlıdır. Kart bilgileriniz sistemde saklanmaz.
                                 </small>
                             </div>
 
@@ -61,6 +124,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Kart Üzerindeki İsim</label>
                                     <input type="text"
+                                           id="kart_isim"
                                            name="kart_isim"
                                            class="form-control kart-input"
                                            placeholder="Ad Soyad">
@@ -69,6 +133,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Kart Numarası</label>
                                     <input type="text"
+                                           id="kart_numarasi"
                                            name="kart_numarasi"
                                            class="form-control kart-input"
                                            maxlength="19"
@@ -77,7 +142,9 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Son Kullanma Ayı</label>
-                                    <select name="son_kullanma_ay" class="form-select kart-input">
+                                    <select id="son_kullanma_ay"
+                                            name="son_kullanma_ay"
+                                            class="form-select kart-input">
                                         <option value="">Ay</option>
 
                                         <?php for ($ay = 1; $ay <= 12; $ay++): ?>
@@ -90,7 +157,9 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Son Kullanma Yılı</label>
-                                    <select name="son_kullanma_yil" class="form-select kart-input">
+                                    <select id="son_kullanma_yil"
+                                            name="son_kullanma_yil"
+                                            class="form-select kart-input">
                                         <option value="">Yıl</option>
 
                                         <?php for ($yil = date('Y'); $yil <= date('Y') + 10; $yil++): ?>
@@ -103,7 +172,8 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">CVV</label>
-                                    <input type="text"
+                                    <input type="password"
+                                           id="cvv"
                                            name="cvv"
                                            class="form-control kart-input"
                                            maxlength="3"
@@ -184,30 +254,80 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const odemeSelect = document.getElementById('odeme_yontemi');
+    const odemeRadio = document.querySelectorAll('.odeme-radio');
     const kartBilgileri = document.getElementById('kart_bilgileri');
     const kartInputlari = document.querySelectorAll('.kart-input');
 
-    function kartAlanlariniKontrolEt() {
-        const secilenOdeme = odemeSelect.value;
+    const kartIsim = document.getElementById('kart_isim');
+    const kartNumarasi = document.getElementById('kart_numarasi');
+    const sonAy = document.getElementById('son_kullanma_ay');
+    const sonYil = document.getElementById('son_kullanma_yil');
+    const cvv = document.getElementById('cvv');
 
-        if (secilenOdeme === 'Kapıda Ödeme' || secilenOdeme === '') {
+    const previewKartNo = document.getElementById('preview_kart_no');
+    const previewIsim = document.getElementById('preview_isim');
+    const previewTarih = document.getElementById('preview_tarih');
+
+    function secilenOdemeYontemi() {
+        const secili = document.querySelector('input[name="odeme_yontemi"]:checked');
+        return secili ? secili.value : '';
+    }
+
+    function kartAlanlariniKontrolEt() {
+        const odemeYontemi = secilenOdemeYontemi();
+
+        if (odemeYontemi === 'Kredi Kartı' || odemeYontemi === 'Banka Kartı') {
+            kartBilgileri.style.display = 'block';
+
+            kartInputlari.forEach(function (input) {
+                input.setAttribute('required', 'required');
+            });
+        } else {
             kartBilgileri.style.display = 'none';
 
             kartInputlari.forEach(function (input) {
                 input.removeAttribute('required');
                 input.value = '';
             });
-        } else {
-            kartBilgileri.style.display = 'block';
 
-            kartInputlari.forEach(function (input) {
-                input.setAttribute('required', 'required');
-            });
+            previewKartNo.textContent = '•••• •••• •••• ••••';
+            previewIsim.textContent = 'AD SOYAD';
+            previewTarih.textContent = 'AA/YY';
         }
     }
 
-    odemeSelect.addEventListener('change', kartAlanlariniKontrolEt);
+    function kartNumarasiFormatla(value) {
+        value = value.replace(/\D/g, '');
+        value = value.substring(0, 16);
+        return value.replace(/(.{4})/g, '$1 ').trim();
+    }
+
+    kartNumarasi.addEventListener('input', function () {
+        this.value = kartNumarasiFormatla(this.value);
+        previewKartNo.textContent = this.value || '•••• •••• •••• ••••';
+    });
+
+    kartIsim.addEventListener('input', function () {
+        previewIsim.textContent = this.value.toUpperCase() || 'AD SOYAD';
+    });
+
+    sonAy.addEventListener('change', tarihGuncelle);
+    sonYil.addEventListener('change', tarihGuncelle);
+
+    function tarihGuncelle() {
+        const ay = sonAy.value || 'AA';
+        const yil = sonYil.value ? sonYil.value.slice(-2) : 'YY';
+
+        previewTarih.textContent = ay + '/' + yil;
+    }
+
+    cvv.addEventListener('input', function () {
+        this.value = this.value.replace(/\D/g, '').substring(0, 3);
+    });
+
+    odemeRadio.forEach(function (radio) {
+        radio.addEventListener('change', kartAlanlariniKontrolEt);
+    });
 
     kartAlanlariniKontrolEt();
 });
