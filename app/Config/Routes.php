@@ -34,7 +34,9 @@ $routes->get('sepet-sil/(:num)', 'SepetController::sil/$1');
 $routes->get('sepet-temizle', 'SepetController::temizle');
 
 //odeme
-$routes->get('odeme','Home::odeme');
+//$routes->get('odeme','Home::odeme');
+$routes->get('odeme', 'SiparisController::odeme');
+$routes->post('siparis-tamamla', 'SiparisController::tamamla');
 
 
 
