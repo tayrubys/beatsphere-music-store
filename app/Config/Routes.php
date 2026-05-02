@@ -14,6 +14,7 @@ $routes->get('kargo_takip','Home::kargo_takip');
 
 //kullanıcı işlemleri
 $routes->get('register', 'Home::register');
+$routes->post('register-kaydet', 'Auth::registerKaydet');
 $routes->get('profil','Home::profil');
 $routes->get('/login', 'Auth::login');
 $routes->post('/login-kontrol', 'Auth::loginKontrol');

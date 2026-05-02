@@ -13,20 +13,18 @@ class Auth extends BaseController
 
     public function loginKontrol()
     {
-        
-
-        $eposta = $this->request->getPost('eposta'); //epostayı alıyor
+        $eposta = $this->request->getPost('eposta');
         $sifre = $this->request->getPost('sifre');
 
         $model = new KullaniciModel();
 
-        $kullanici = $model->where('eposta', $eposta)->first();//veritabanında kullanıcıyı arıyozu
+        $kullanici = $model->where('eposta', $eposta)->first();
 
         if (!$kullanici) {
             return redirect()->back()->with('hata', 'Bu e-posta ile kayıtlı kullanıcı bulunamadı.');
         }
 
-        if (!password_verify($sifre, $kullanici['sifre'])) {//hashli sifreyi kontrol ediyoruz
+        if (!password_verify($sifre, $kullanici['sifre'])) {
             return redirect()->back()->with('hata', 'Şifre hatalı.');
         }
 
@@ -34,13 +32,12 @@ class Auth extends BaseController
             return redirect()->back()->with('hata', 'Hesabınız aktif değil.');
         }
 
-        //giris bilgisini hafizaya aliyroz
         session()->set([
-            'kullanici_id' => $kullanici['id'],
-            'ad_soyad'     => $kullanici['ad_soyad'],
-            'eposta'       => $kullanici['eposta'],
-            'rol'          => $kullanici['rol'],
-            'giris_yapildi'=> true
+            'kullanici_id'  => $kullanici['id'],
+            'ad_soyad'      => $kullanici['ad_soyad'],
+            'eposta'        => $kullanici['eposta'],
+            'rol'           => $kullanici['rol'],
+            'giris_yapildi' => true
         ]);
 
         if ($kullanici['rol'] == 'admin') {
@@ -48,6 +45,40 @@ class Auth extends BaseController
         }
 
         return redirect()->to('/');
+    }
+
+    public function registerKaydet()
+    {
+        $model = new KullaniciModel();
+
+        $adSoyad = $this->request->getPost('ad_soyad');
+        $eposta  = $this->request->getPost('eposta');
+        $telefon = $this->request->getPost('telefon');
+        $adres   = $this->request->getPost('adres');
+        $sifre   = $this->request->getPost('sifre');
+
+        if (empty($adSoyad) || empty($eposta) || empty($telefon) || empty($adres) || empty($sifre)) {
+            return redirect()->back()->with('hata', 'Lütfen tüm alanları doldurun.');
+        }
+
+        $varMi = $model->where('eposta', $eposta)->first();
+
+        if ($varMi) {
+            return redirect()->back()->with('hata', 'Bu e-posta adresi zaten kayıtlı.');
+        }
+
+        $model->insert([
+            'ad_soyad' => $adSoyad,
+            'eposta'   => $eposta,
+            'telefon'  => $telefon,
+            'adres'    => $adres,
+            'sifre'    => password_hash($sifre, PASSWORD_DEFAULT),
+            'rol'      => 'user',
+            'bakiye'   => 0,
+            'durum'    => 'aktif'
+        ]);
+
+        return redirect()->to('/login')->with('basari', 'Kayıt başarılı. Şimdi giriş yapabilirsiniz.');
     }
 
     public function logout()
