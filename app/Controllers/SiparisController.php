@@ -161,4 +161,112 @@ class SiparisController extends BaseController
 
         return redirect()->to('/')->with('basari', 'Siparişiniz başarıyla oluşturuldu.');
     }
+
+    public function detay($siparisId)
+{
+    if (!session()->get('giris_yapildi')) {
+        return redirect()->to('/login')->with('hata', 'Sipariş detayını görüntülemek için giriş yapmalısınız.');
+    }
+
+    $kullaniciId = session()->get('kullanici_id');
+
+    $db = \Config\Database::connect();
+
+    // Sipariş gerçekten bu kullanıcıya mı ait?
+    $siparis = $db->table('siparisler')
+        ->where('id', $siparisId)
+        ->where('kullanici_id', $kullaniciId)
+        ->get()
+        ->getRowArray();
+
+    if (!$siparis) {
+        return redirect()->to('/profil')->with('hata', 'Sipariş bulunamadı.');
+    }
+
+    // Sipariş içindeki ürünleri getir
+    $siparisUrunleri = $db->table('siparis_detaylari')
+        ->select('
+            siparis_detaylari.adet,
+            siparis_detaylari.birim_fiyat,
+            urunler.album_adi,
+            urunler.sanatci,
+            urunler.resim
+        ')
+        ->join('urunler', 'urunler.id = siparis_detaylari.urun_id')
+        ->where('siparis_detaylari.siparis_id', $siparisId)
+        ->get()
+        ->getResultArray();
+
+    return view('siparis_detay', [
+        'siparis' => $siparis,
+        'siparis_urunleri' => $siparisUrunleri
+    ]);
+}
+
+public function iptal($siparisId)
+{
+    if (!session()->get('giris_yapildi')) {
+        return redirect()->to('/login')->with('hata', 'Sipariş iptal etmek için giriş yapmalısınız.');
+    }
+
+    $kullaniciId = session()->get('kullanici_id');
+
+    $db = \Config\Database::connect();
+
+    $siparis = $db->table('siparisler')
+        ->where('id', $siparisId)
+        ->where('kullanici_id', $kullaniciId)
+        ->get()
+        ->getRowArray();
+
+    if (!$siparis) {
+        return redirect()->to('/profil')->with('hata', 'Sipariş bulunamadı.');
+    }
+
+    if ($siparis['durum'] != 'beklemede') {
+        return redirect()->to('siparis-detay/' . $siparisId)
+            ->with('hata', 'Sadece beklemede olan siparişler iptal edilebilir.');
+    }
+
+    $siparisUrunleri = $db->table('siparis_detaylari')
+        ->where('siparis_id', $siparisId)
+        ->get()
+        ->getResultArray();
+
+    $db->transStart();
+
+    foreach ($siparisUrunleri as $urun) {
+        $mevcutUrun = $db->table('urunler')
+            ->where('id', $urun['urun_id'])
+            ->get()
+            ->getRowArray();
+
+        if ($mevcutUrun) {
+            $yeniStok = $mevcutUrun['stok'] + $urun['adet'];
+
+            $db->table('urunler')
+                ->where('id', $urun['urun_id'])
+                ->update([
+                    'stok' => $yeniStok
+                ]);
+        }
+    }
+
+    $db->table('siparisler')
+        ->where('id', $siparisId)
+        ->where('kullanici_id', $kullaniciId)
+        ->update([
+            'durum' => 'iptal'
+        ]);
+
+    $db->transComplete();
+
+    if ($db->transStatus() === false) {
+        return redirect()->to('siparis-detay/' . $siparisId)
+            ->with('hata', 'Sipariş iptal edilirken bir hata oluştu.');
+    }
+
+    return redirect()->to('siparis-detay/' . $siparisId)
+        ->with('basari', 'Sipariş iptal edildi. Ürün stokları geri eklendi.');
+}
 }

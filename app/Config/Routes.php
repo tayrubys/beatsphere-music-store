@@ -38,6 +38,10 @@ $routes->get('sepet-temizle', 'SepetController::temizle');
 $routes->get('odeme', 'SiparisController::odeme');
 $routes->post('siparis-tamamla', 'SiparisController::tamamla');
 
+//sipariş detay
+$routes->get('siparis-detay/(:num)', 'SiparisController::detay/$1');
+$routes->get('siparis-iptal/(:num)', 'SiparisController::iptal/$1');
+
 
 
 

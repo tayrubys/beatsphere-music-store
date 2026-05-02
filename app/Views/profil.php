@@ -191,11 +191,12 @@
                                     <table class="table align-middle siparis-table">
                                         <thead>
                                             <tr>
-                                                <th>Sipariş No</th>
-                                                <th>Tutar</th>
-                                                <th>Ödeme</th>
-                                                <th>Durum</th>
-                                                <th>Tarih</th>
+                                               <th>Sipariş No</th>
+                                               <th>Tutar</th>
+                                               <th>Ödeme</th>
+                                               <th>Durum</th>
+                                               <th>Tarih</th>
+                                               <th>İşlem</th>
                                             </tr>
                                         </thead>
 
@@ -244,6 +245,13 @@
 
                                                     <td>
                                                         <?= esc($siparis['tarih']) ?>
+                                                    </td>
+
+                                                    <td>
+                                                        <a href="<?= base_url('siparis-detay/' . $siparis['id']) ?>"
+                                                            class="btn btn-sm btn-outline-primary">
+                                                              Detay
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
