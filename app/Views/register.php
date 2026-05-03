@@ -129,10 +129,6 @@
                         </div>
 
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="adres" name="adres" placeholder="Adres" required>
-                        </div>
-
-                        <div class="col-md-12 form-group">
                             <input type="password" class="form-control" id="sifre" name="sifre" placeholder="Şifre" required>
                         </div>
 

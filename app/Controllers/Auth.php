@@ -54,10 +54,9 @@ class Auth extends BaseController
         $adSoyad = $this->request->getPost('ad_soyad');
         $eposta  = $this->request->getPost('eposta');
         $telefon = $this->request->getPost('telefon');
-        $adres   = $this->request->getPost('adres');
         $sifre   = $this->request->getPost('sifre');
 
-        if (empty($adSoyad) || empty($eposta) || empty($telefon) || empty($adres) || empty($sifre)) {
+        if (empty($adSoyad) || empty($eposta) || empty($telefon) || empty($sifre)) {
             return redirect()->back()->with('hata', 'Lütfen tüm alanları doldurun.');
         }
 
@@ -71,7 +70,7 @@ class Auth extends BaseController
             'ad_soyad' => $adSoyad,
             'eposta'   => $eposta,
             'telefon'  => $telefon,
-            'adres'    => $adres,
+            'adres'    => '',
             'sifre'    => password_hash($sifre, PASSWORD_DEFAULT),
             'rol'      => 'user',
             'bakiye'   => 0,
