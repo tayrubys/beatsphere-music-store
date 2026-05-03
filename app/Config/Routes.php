@@ -28,6 +28,23 @@ $routes->get('/admin', 'Admin::index');
 $routes->get('/admin/siparisler', 'Admin::siparisler');
 $routes->get('/admin/siparis-onayla/(:num)', 'Admin::siparisOnayla/$1');
 $routes->get('/admin/siparis-asama-ilerlet/(:num)', 'Admin::siparisAsamaIlerlet/$1');
+//admin ürün yönetimi
+$routes->get('/admin/urunler', 'Admin::urunler');
+$routes->get('/admin/urun-sil/(:num)', 'Admin::urunSil/$1');
+$routes->get('/admin/urun-durum-degistir/(:num)', 'Admin::urunDurumDegistir/$1');
+$routes->get('/admin/urun-populer-degistir/(:num)', 'Admin::urunPopulerDegistir/$1');
+$routes->get('/admin/urun-ekle', 'Admin::urunEkle');
+$routes->post('/admin/urun-kaydet', 'Admin::urunKaydet');
+$routes->get('/admin/urun-duzenle/(:num)', 'Admin::urunDuzenle/$1');
+$routes->post('/admin/urun-guncelle/(:num)', 'Admin::urunGuncelle/$1');
+//admin kullanıcı yönetimi
+$routes->get('/admin/kullanicilar', 'Admin::kullanicilar');
+$routes->get('/admin/kullanici-ekle', 'Admin::kullaniciEkle');
+$routes->post('/admin/kullanici-kaydet', 'Admin::kullaniciKaydet');
+$routes->get('/admin/kullanici-duzenle/(:num)', 'Admin::kullaniciDuzenle/$1');
+$routes->post('/admin/kullanici-guncelle/(:num)', 'Admin::kullaniciGuncelle/$1');
+$routes->get('/admin/kullanici-durum-degistir/(:num)', 'Admin::kullaniciDurumDegistir/$1');
+$routes->get('/admin/kullanici-sil/(:num)', 'Admin::kullaniciSil/$1');
 
 //urun ve kategori
 $routes->get('/kategori/(:num)', 'UrunController::kategori/$1');
