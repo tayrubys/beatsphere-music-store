@@ -62,7 +62,8 @@ BeatSphere/
 └── .env                 # Ortam değişkenleri
 ```
  
----## 📊 Diyagramlar
+---
+##  Diyagramlar
  
 ### Akış Diyagramı
  
