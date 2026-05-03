@@ -22,7 +22,7 @@
                         Ürünleri listele, satış durumunu değiştir, popüler ürünleri ayarla ve ürün silme işlemlerini yap.
                     </p>
 
-                    <a href="<?= base_url('admin/urunler') ?>" class="btn btn-primary">
+                    <a href="<?= base_url('admin/urunler') ?>" class="btn btn-success">
                         Ürünleri Yönet
                     </a>
                 </div>
@@ -35,10 +35,10 @@
                     <h5 class="fw-bold mb-3">Kullanıcı Yönetimi</h5>
 
                     <p class="text-muted">
-                        Kullanıcıları listele, yeni kullanıcı ekle, aktif/pasif yap ve bilgilerini düzenle.
+                        Kullanıcıları listele, yeni admin ekle, aktif/pasif yap ve bilgilerini düzenle.
                     </p>
 
-                    <a href="<?= base_url('admin/kullanicilar') ?>" class="btn btn-dark">
+                    <a href="<?= base_url('admin/kullanicilar') ?>" class="btn btn-success">
                         Kullanıcıları Yönet
                     </a>
                 </div>

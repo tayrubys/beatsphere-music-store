@@ -395,20 +395,19 @@ class Admin extends BaseController
         ]);
     }
 
-    public function kullaniciEkle()
-    {
-        $kontrol = $this->adminKontrol();
-        if ($kontrol) {
-            return $kontrol;
-        }
-
-        return view('admin/kullanici_form', [
-            'baslik' => 'Yeni Admin Kullanıcısı Ekle',
-            'islem' => 'ekle',
-            'kullanici' => null
-        ]);
+public function kullaniciEkle()
+{
+    $kontrol = $this->adminKontrol();
+    if ($kontrol) {
+        return $kontrol;
     }
 
+    return view('admin/kullanici_form', [
+        'baslik' => 'Yeni Admin Kullanıcısı Ekle',
+        'islem' => 'ekle',
+        'kullanici' => null
+    ]);
+}
     public function kullaniciKaydet()
     {
         $kontrol = $this->adminKontrol();

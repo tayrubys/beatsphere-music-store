@@ -12,9 +12,15 @@
             </p>
         </div>
 
-        <a href="<?= base_url('admin') ?>" class="btn btn-outline-secondary">
-            Admin Paneli
-        </a>
+        <div class="d-flex gap-2">
+            <a href="<?= base_url('admin/kullanici-ekle') ?>" class="btn btn-success">
+                Yeni Admin Ekle
+            </a>
+
+            <a href="<?= base_url('admin') ?>" class="btn btn-outline-secondary">
+                Admin Paneli
+            </a>
+        </div>
     </div>
 
     <?php if (session()->getFlashdata('hata')): ?>
@@ -106,7 +112,9 @@
 
                                             <?php else: ?>
 
-                                                <span class="text-muted small">Kendi hesabınız</span>
+                                                <span class="text-muted small">
+                                                    Kendi hesabınız
+                                                </span>
 
                                             <?php endif; ?>
 
