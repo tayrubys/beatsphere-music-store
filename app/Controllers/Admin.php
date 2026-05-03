@@ -336,7 +336,7 @@ class Admin extends BaseController
             return redirect()->to('/admin/urunler')->with('hata', 'Ürün bulunamadı.');
         }
 
-        $yeniDurum = ($urun['durum'] == 'satista') ? 'satista_degil' : 'satista';
+        $yeniDurum = ($urun['durum'] == 'satista') ? 'kaldirildi' : 'satista';
 
         $db->table('urunler')
             ->where('id', $urunId)

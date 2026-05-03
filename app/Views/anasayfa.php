@@ -41,10 +41,66 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-5 mb-4 mb-md-0">
-                        <div class="hero-placeholder shadow">
-                            <i class="fa-solid fa-compact-disc fa-spin fa-4x mb-3" style="--fa-animation-duration: 5s;"></i>
-                            <p class="small opacity-75">Slider Görselleri Buraya Gelecek</p>
+                       <div class="hero-placeholder shadow p-0 overflow-hidden">
+
+    <?php if (!empty($urunler)): ?>
+        <div id="albumSlider" class="carousel slide w-100 h-100" data-bs-ride="carousel">
+
+            <div class="carousel-inner w-100 h-100">
+
+                <?php foreach (array_slice($urunler, 1, 4) as $index => $urun): ?>
+                    <div class="carousel-item w-100 h-100 <?= $index == 0 ? 'active' : '' ?>">
+
+                        <a href="<?= base_url('urun/' . $urun['id']) ?>">
+                            <img src="<?= esc($urun['resim']) ?>"
+                                 class="d-block w-100 h-100"
+                                 alt="<?= esc($urun['album_adi']) ?>"
+                                 style="object-fit: cover;">
+                        </a>
+
+                        <div class="carousel-caption d-none d-md-block"
+                             style="background: rgba(0,0,0,0.55); border-radius: 12px; padding: 10px;">
+                            <h5 class="fw-bold mb-1">
+                                <?= esc($urun['album_adi']) ?>
+                            </h5>
+
+                            <p class="mb-0">
+                                <?= esc($urun['sanatci']) ?>
+                            </p>
                         </div>
+
+                    </div>
+                <?php endforeach; ?>
+
+            </div>
+
+            <button class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#albumSlider"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#albumSlider"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+
+        </div>
+    <?php else: ?>
+
+        <div class="d-flex align-items-center justify-content-center h-100 text-white">
+            <div class="text-center">
+                <i class="fa-solid fa-compact-disc fa-spin fa-4x mb-3" style="--fa-animation-duration: 5s;"></i>
+                <p class="small opacity-75">Popüler albümler burada gösterilecek.</p>
+            </div>
+        </div>
+
+    <?php endif; ?>
+
+</div>
                     </div>
                     <div class="col-md-7 ps-md-5">
                         <h4 class="text-primary">Müzik Keyfi</h4>
@@ -59,7 +115,6 @@
         <section class="py-5" id="urunler">
             <div class="container">
                 <div class="text-center mb-5">
-                    <p class="text-muted mb-1">Yeni Gelenler</p>
                     <h2 class="fw-bold">Popüler <span class="section-intro__style">Albümler</span></h2>
                 </div>
 

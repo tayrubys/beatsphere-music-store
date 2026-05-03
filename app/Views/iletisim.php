@@ -47,9 +47,9 @@
         }
     </style>
 
-       <section class="login-header text-center mb-5">
+    <section class="blog-banner-area bg-light py-5 mb-5 text-center">
         <div class="container">
-            <h1 class="display-5 fw-bold">İletişim</h1>
+            <h1 class="display-5 fw-bold text-dark">İletişim</h1>
         </div>
     </section>
 

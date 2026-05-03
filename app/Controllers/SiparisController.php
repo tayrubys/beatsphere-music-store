@@ -354,4 +354,52 @@ public function teslimAldim($siparisId)
     return redirect()->to('siparis-detay/' . $siparisId)
         ->with('basari', 'Sipariş teslim alındı olarak işaretlendi.');
 }
+public function fatura($siparisId)
+{
+    if (!session()->get('giris_yapildi')) {
+        return redirect()->to('/login')->with('hata', 'Fatura görüntülemek için giriş yapmalısınız.');
+    }
+
+    $kullaniciId = session()->get('kullanici_id');
+    $rol = session()->get('rol');
+
+    $db = \Config\Database::connect();
+
+    $builder = $db->table('siparisler')
+        ->select('
+            siparisler.*,
+            kullanicilar.ad_soyad,
+            kullanicilar.eposta,
+            kullanicilar.telefon
+        ')
+        ->join('kullanicilar', 'kullanicilar.id = siparisler.kullanici_id')
+        ->where('siparisler.id', $siparisId);
+
+    // Admin tüm faturaları görebilir, user sadece kendi faturasını görebilir
+    if ($rol != 'admin') {
+        $builder->where('siparisler.kullanici_id', $kullaniciId);
+    }
+
+    $siparis = $builder->get()->getRowArray();
+
+    if (!$siparis) {
+        return redirect()->to('/profil')->with('hata', 'Fatura bulunamadı.');
+    }
+
+    $siparisUrunleri = $db->table('siparis_detaylari')
+        ->select('
+            siparis_detaylari.*,
+            urunler.album_adi,
+            urunler.sanatci
+        ')
+        ->join('urunler', 'urunler.id = siparis_detaylari.urun_id')
+        ->where('siparis_detaylari.siparis_id', $siparisId)
+        ->get()
+        ->getResultArray();
+
+    return view('fatura', [
+        'siparis' => $siparis,
+        'siparis_urunleri' => $siparisUrunleri
+    ]);
+}
 }

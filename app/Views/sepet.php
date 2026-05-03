@@ -76,17 +76,15 @@
     }
 </style>
 
-<section class="cart-header text-center mb-5">
-    <div class="container">
-        <h1 class="display-5 fw-bold">
-            <i class="fa-solid fa-cart-shopping me-3"></i>Alışveriş Sepetim
-        </h1>
-        <p class="lead mb-0" style="opacity: 0.8;">
+    <section class="blog-banner-area bg-light py-5 mb-5 text-center">
+        <div class="container">
+            <h1 class="display-5 fw-bold text-dark">
+                <i class="fa-solid fa-cart-shopping me-3"></i>Alışveriş Sepetim</h1>
+            <p class="lead mb-0" style="opacity: 0.8;">
             Seçtiğiniz harika albümler burada sizi bekliyor.
-        </p>
-    </div>
-</section>
-
+            </p>
+        </div>
+    </section>
 <div class="container mb-5">
 
     <?php if (session()->getFlashdata('basari')): ?>

@@ -4,25 +4,25 @@
 
     <style>
         /* Senin temanın login sayfasına özel bazı CSS kuralları */
-        .login-header { background: linear-gradient(135deg, #141E30 0%, #243B55 100%); color: white; padding: 40px 0; }
+        .login-header { background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%); color: white; padding: 40px 0; }
         .login_box_area { margin-top: 50px; margin-bottom: 50px; }
-       .login_box_img { background: linear-gradient(135deg, #141E30 0%, #243B55 100%); color: white; text-align: center; height: 100%; display: flex; align-items: center; justify-content: center; padding: 50px; border-radius: 10px 0 0 10px; }
+       .login_box_img { background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%); color: white; text-align: center; height: 100%; display: flex; align-items: center; justify-content: center; padding: 50px; border-radius: 10px 0 0 10px; }
         .button-account { border: 1px solid white; color: white; padding: 10px 30px; border-radius: 5px; text-decoration: none; transition: 0.3s; display: inline-block; margin-top: 20px;}
         .button-account:hover { background: white; color: #333; }
         
         .login_form_inner { padding: 50px; border: 1px solid #eee; border-radius: 0 10px 10px 0; height: 100%; box-shadow: 0 0 15px rgba(0,0,0,0.05); }
         .login_form_inner h3 { margin-bottom: 30px; font-weight: bold; color: #333; text-align: center; }
         .form-control { border-radius: 0; margin-bottom: 15px; border-color: #ddd; }
-        .button-login { background: #2c3e50; color: white; border: none; padding: 12px; border-radius: 5px; font-weight: bold; transition: 0.3s; }
-        .button-login:hover { background: #1a252f; color: white; }
+        .button-login { background: #0d6efd; color: white; border: none; padding: 12px; border-radius: 5px; font-weight: bold; transition: 0.3s; }
+        .button-login:hover { background: #0b5ed7; color: white; }
         
         .creat_account { margin-bottom: 15px; }
         .creat_account label { margin-left: 5px; color: #777; }
         
     </style>
-   <section class="login-header text-center mb-5">
+    <section class="blog-banner-area bg-light py-5 mb-5 text-center">
         <div class="container">
-            <h1 class="display-5 fw-bold">Giriş Yap</h1>
+            <h1 class="display-5 fw-bold text-dark">Giriş Yap</h1>
         </div>
     </section>
     <section class="login_box_area">

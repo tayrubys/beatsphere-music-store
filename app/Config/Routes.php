@@ -66,7 +66,7 @@ $routes->post('siparis-tamamla', 'SiparisController::tamamla');
 $routes->get('siparis-detay/(:num)', 'SiparisController::detay/$1');
 $routes->get('siparis-iptal/(:num)', 'SiparisController::iptal/$1');
 $routes->get('siparis-teslim-aldim/(:num)', 'SiparisController::teslimAldim/$1');
-
+$routes->get('siparis-fatura/(:num)', 'SiparisController::fatura/$1');
 
 
 

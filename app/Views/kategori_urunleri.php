@@ -16,9 +16,11 @@
                     <div class="card text-center card-product border-0">
 
                         <div class="card-product__img text-center">
-                            <img src="<?= esc($urun['resim']) ?>"
-                                 alt="<?= esc($urun['album_adi']) ?>"
-                                 style="width:250px; height:250px; object-fit:cover;">
+                            <a href="<?= base_url('urun/' . $urun['id']) ?>">
+                                <img src="<?= esc($urun['resim']) ?>"
+                                     alt="<?= esc($urun['album_adi']) ?>"
+                                     style="width:250px; height:250px; object-fit:cover;">
+                            </a>
                         </div>
 
                         <div class="card-body p-0">
@@ -26,26 +28,30 @@
                                 <?= esc($urun['sanatci']) ?>
                             </p>
 
-                            <h5 class="fw-bold text-dark">
-                                <?= esc($urun['album_adi']) ?>
-                            </h5>
+                            <a href="<?= base_url('urun/' . $urun['id']) ?>"
+                               class="text-decoration-none">
+                                <h5 class="fw-bold text-dark">
+                                    <?= esc($urun['album_adi']) ?>
+                                </h5>
+                            </a>
 
                             <p class="text-primary fw-bold">
                                 <?= number_format($urun['fiyat'], 2) ?> ₺
                             </p>
 
- <form action="<?= base_url('sepete-ekle') ?>" method="post">
-    <?= csrf_field() ?>
+                            <form action="<?= base_url('sepete-ekle') ?>" method="post">
+                                <?= csrf_field() ?>
 
-    <input type="hidden" name="urun_id" value="<?= esc($urun['id']) ?>">
-    <input type="hidden" name="adet" value="1">
+                                <input type="hidden" name="urun_id" value="<?= esc($urun['id']) ?>">
+                                <input type="hidden" name="adet" value="1">
 
-    <button type="submit"
-            class="btn btn-sm btn-outline-primary w-100 rounded-pill"
-            <?= $urun['stok'] <= 0 ? 'disabled' : '' ?>>
-        <?= $urun['stok'] <= 0 ? 'Stok Yok' : 'Sepete Ekle' ?>
-    </button>
-</form>                           
+                                <button type="submit"
+                                        class="btn btn-sm btn-outline-primary w-100 rounded-pill"
+                                        <?= $urun['stok'] <= 0 ? 'disabled' : '' ?>>
+                                    <?= $urun['stok'] <= 0 ? 'Stok Yok' : 'Sepete Ekle' ?>
+                                </button>
+                            </form>
+
                         </div>
 
                     </div>

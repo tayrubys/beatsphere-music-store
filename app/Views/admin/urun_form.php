@@ -114,7 +114,7 @@
                             </option>
 
                             <option value="satista_degil"
-                                <?= isset($urun['durum']) && $urun['durum'] == 'satista_degil' ? 'selected' : '' ?>>
+                                <?= isset($urun['durum']) && $urun['durum'] == 'kaldirildi' ? 'selected' : '' ?>>
                                 Satışta Değil
                             </option>
                         </select>

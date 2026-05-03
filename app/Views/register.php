@@ -4,10 +4,10 @@
 
 <style>
     .login_box_area { margin-top: 50px; margin-bottom: 50px; }
-    .login-header { background: linear-gradient(135deg, #141E30 0%, #243B55 100%); color: white; padding: 40px 0; }
+    .login-header { background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%); color: white; padding: 40px 0; }
 
     .register_box_img {
-        background: linear-gradient(135deg, #141E30 0%, #243B55 100%);
+        background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
         color: white;
         text-align: center;
         height: 100%;
@@ -38,7 +38,7 @@
 
     .button-account:hover {
         background: white;
-        color: #141E30;
+        color: #0d6efd;
     }
 
     .login_form_inner {
@@ -63,7 +63,7 @@
     }
 
     .button-register {
-        background: #2c3e50;
+        background: #0d6efd;
         color: white;
         border: none;
         padding: 12px;
@@ -73,17 +73,16 @@
     }
 
     .button-register:hover {
-        background: #1a252f;
+        background: #0b5ed7;
         color: white;
     }
 </style>
 
-<section class="login-header text-center mb-5">
-    <div class="container">
-        <h1 class="display-5 fw-bold">Kayıt Ol</h1>
-    </div>
-</section>
-
+    <section class="blog-banner-area bg-light py-5 mb-5 text-center">
+        <div class="container">
+            <h1 class="display-5 fw-bold text-dark">Kayıt Ol</h1>
+        </div>
+    </section>
 <section class="login_box_area">
     <div class="container">
         <div class="row align-items-stretch flex-row-reverse">

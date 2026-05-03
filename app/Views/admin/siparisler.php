@@ -103,7 +103,10 @@
 
                                     <td>
                                         <?php if ($siparis['durum'] == 'beklemede'): ?>
-
+                                            <a href="<?= base_url('siparis-fatura/' . $siparis['id']) ?>"
+                                                class="btn btn-sm btn-outline-dark">
+                                                Fatura
+                                            </a>
                                             <a href="<?= base_url('admin/siparis-onayla/' . $siparis['id']) ?>"
                                                class="btn btn-sm btn-success"
                                                onclick="return confirm('Bu siparişi onaylamak istiyor musunuz?');">
