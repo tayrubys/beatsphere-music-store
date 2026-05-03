@@ -25,6 +25,9 @@ $routes->post('hesap-dondur', 'ProfilController::hesapDondur');
 
 //admin
 $routes->get('/admin', 'Admin::index');
+$routes->get('/admin/siparisler', 'Admin::siparisler');
+$routes->get('/admin/siparis-onayla/(:num)', 'Admin::siparisOnayla/$1');
+$routes->get('/admin/siparis-asama-ilerlet/(:num)', 'Admin::siparisAsamaIlerlet/$1');
 
 //urun ve kategori
 $routes->get('/kategori/(:num)', 'UrunController::kategori/$1');
@@ -45,6 +48,7 @@ $routes->post('siparis-tamamla', 'SiparisController::tamamla');
 //sipariş detay
 $routes->get('siparis-detay/(:num)', 'SiparisController::detay/$1');
 $routes->get('siparis-iptal/(:num)', 'SiparisController::iptal/$1');
+$routes->get('siparis-teslim-aldim/(:num)', 'SiparisController::teslimAldim/$1');
 
 
 

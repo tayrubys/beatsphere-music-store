@@ -1,6 +1,137 @@
-
 <?= $this->extend('sablon/ana_sablon') ?>
 <?= $this->section('icerik') ?>
+
+<?php
+$asamaMetni = [
+    'beklemede' => 'Siparişiniz beklemede.',
+    'tedarik_ediliyor' => 'Ürünleriniz tedarik ediliyor.',
+    'kutulaniyor' => 'Ürünleriniz kutulanıyor.',
+    'kargoya_verildi' => 'Ürünleriniz kargoya verildi.',
+    'yolda' => 'Ürünleriniz size doğru yola çıktı.',
+    'teslim_edildi' => 'Ürünleriniz size teslim edilmiştir.',
+    'teslim_alindi' => 'Siparişi teslim aldınız.',
+    'iptal' => 'Sipariş iptal edildi.'
+];
+
+$asamaSirasi = [
+    'beklemede' => 0,
+    'tedarik_ediliyor' => 1,
+    'kutulaniyor' => 2,
+    'kargoya_verildi' => 3,
+    'yolda' => 4,
+    'teslim_edildi' => 5,
+    'teslim_alindi' => 6
+];
+
+$aktifAsamaIndex = $asamaSirasi[$siparis['siparis_asamasi']] ?? 0;
+?>
+
+<style>
+    .takip-wrapper {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 16px;
+        padding: 22px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    .takip-baslik {
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #1f2937;
+    }
+
+    .takip-steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 10px;
+        position: relative;
+    }
+
+    .takip-step {
+        flex: 1;
+        text-align: center;
+        position: relative;
+    }
+
+    .takip-step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 17px;
+        left: 55%;
+        width: 90%;
+        height: 4px;
+        background: #d1d5db;
+        z-index: 0;
+        border-radius: 10px;
+    }
+
+    .takip-step.active:not(:last-child)::after,
+    .takip-step.current:not(:last-child)::after {
+        background: #198754;
+    }
+
+    .takip-circle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #d1d5db;
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: bold;
+        position: relative;
+        z-index: 1;
+        margin-bottom: 8px;
+    }
+
+    .takip-step.active .takip-circle {
+        background: #198754;
+    }
+
+    .takip-step.current .takip-circle {
+        background: #0d6efd;
+        transform: scale(1.1);
+    }
+
+    .takip-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #6c757d;
+        line-height: 1.3;
+    }
+
+    .takip-step.active .takip-label,
+    .takip-step.current .takip-label {
+        color: #212529;
+    }
+
+    @media (max-width: 768px) {
+        .takip-steps {
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .takip-step {
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .takip-step:not(:last-child)::after {
+            display: none;
+        }
+
+        .takip-circle {
+            margin-bottom: 0;
+        }
+    }
+</style>
 
 <div class="container my-5">
 
@@ -23,6 +154,70 @@
             Profilime Dön
         </a>
     </div>
+
+    <?php if ($siparis['siparis_asamasi'] != 'iptal'): ?>
+
+        <div class="takip-wrapper">
+            <h5 class="takip-baslik">Sipariş Takibi</h5>
+
+            <div class="takip-steps">
+                <?php
+                $gosterilecekAsamalar = [
+                    'beklemede' => 'Onay Bekliyor',
+                    'tedarik_ediliyor' => 'Tedarik',
+                    'kutulaniyor' => 'Kutulandı',
+                    'kargoya_verildi' => 'Kargoya Verildi',
+                    'yolda' => 'Yolda',
+                    'teslim_edildi' => 'Teslim Edildi'
+                ];
+
+                $i = 0;
+                foreach ($gosterilecekAsamalar as $anahtar => $etiket):
+                    $stepClass = '';
+
+                    if ($aktifAsamaIndex > $i) {
+                        $stepClass = 'active';
+                    } elseif ($aktifAsamaIndex == $i) {
+                        $stepClass = 'current';
+                    }
+
+                    if ($siparis['siparis_asamasi'] == 'teslim_alindi') {
+                        $stepClass = 'active';
+                    }
+                ?>
+                    <div class="takip-step <?= $stepClass ?>">
+                        <div class="takip-circle">
+                            <?php if ($stepClass == 'active'): ?>
+                                <i class="fa-solid fa-check"></i>
+                            <?php else: ?>
+                                <?= $i + 1 ?>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="takip-label">
+                            <?= esc($etiket) ?>
+                        </div>
+                    </div>
+                <?php
+                    $i++;
+                endforeach;
+                ?>
+            </div>
+
+            <?php if ($siparis['siparis_asamasi'] == 'teslim_alindi'): ?>
+                <div class="alert alert-success mt-3 mb-0">
+                    Siparişi teslim aldınız.
+                </div>
+            <?php endif; ?>
+        </div>
+
+    <?php else: ?>
+
+        <div class="alert alert-danger">
+            Bu sipariş iptal edilmiştir.
+        </div>
+
+    <?php endif; ?>
 
     <div class="row g-4">
 
@@ -54,12 +249,19 @@
 
                         <?php if ($siparis['durum'] == 'beklemede'): ?>
                             <span class="badge bg-warning text-dark">Beklemede</span>
+
                         <?php elseif ($siparis['durum'] == 'onaylandi'): ?>
                             <span class="badge bg-info">Onaylandı</span>
+
                         <?php elseif ($siparis['durum'] == 'iptal'): ?>
                             <span class="badge bg-danger">İptal Edildi</span>
+
                         <?php elseif ($siparis['durum'] == 'teslim_edildi'): ?>
                             <span class="badge bg-success">Teslim Edildi</span>
+
+                        <?php elseif ($siparis['durum'] == 'teslim_alindi'): ?>
+                            <span class="badge bg-success">Teslim Alındı</span>
+
                         <?php else: ?>
                             <span class="badge bg-secondary">
                                 <?= esc($siparis['durum']) ?>
@@ -68,6 +270,12 @@
                     </p>
 
                     <hr>
+
+                    <h6 class="fw-bold mb-2">Sipariş Aşaması</h6>
+
+                    <div class="alert alert-info mb-3">
+                        <?= esc($asamaMetni[$siparis['siparis_asamasi']] ?? $siparis['siparis_asamasi']) ?>
+                    </div>
 
                     <p class="mb-1">
                         <strong>Kargo Adresi:</strong>
@@ -84,6 +292,16 @@
                            class="btn btn-outline-danger w-100"
                            onclick="return confirm('Bu siparişi iptal etmek istiyor musunuz?')">
                             Siparişi İptal Et
+                        </a>
+                    <?php endif; ?>
+
+                    <?php if ($siparis['siparis_asamasi'] == 'teslim_edildi'): ?>
+                        <hr>
+
+                        <a href="<?= base_url('siparis-teslim-aldim/' . $siparis['id']) ?>"
+                           class="btn btn-success w-100"
+                           onclick="return confirm('Bu siparişi teslim aldığınızı onaylıyor musunuz?')">
+                            Ürünlerimi Teslim Aldım
                         </a>
                     <?php endif; ?>
 
@@ -151,33 +369,33 @@
 
                         <hr>
 
-                <div class="text-end mb-3">
-                  <h4 class="fw-bold">
-                      Genel Toplam:
-                  <span class="text-primary">
-                     <?= number_format($siparis['toplam_tutar'], 2) ?> ₺
-                  </span>
-                 </h4>
-                </div>
+                        <div class="text-end mb-3">
+                            <h4 class="fw-bold">
+                                Genel Toplam:
+                                <span class="text-primary">
+                                    <?= number_format($siparis['toplam_tutar'], 2) ?> ₺
+                                </span>
+                            </h4>
+                        </div>
 
-            <div class="mt-4 p-3 border rounded-4 bg-light">
-              <h5 class="fw-bold mb-3">Ödeme Bilgileri</h5>
+                        <div class="mt-4 p-3 border rounded-4 bg-light">
+                            <h5 class="fw-bold mb-3">Ödeme Bilgileri</h5>
 
-            <div class="d-flex justify-content-between mb-2">
-               <span>Sipariş Toplamı:</span>
-                  <strong><?= number_format($siparis['toplam_tutar'], 2) ?> ₺</strong>
-            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Sipariş Toplamı:</span>
+                                <strong><?= number_format($siparis['toplam_tutar'], 2) ?> ₺</strong>
+                            </div>
 
-            <div class="d-flex justify-content-between mb-2">
-              <span>Cüzdandan Kullanılan:</span>
-              <strong><?= number_format($siparis['bakiye_kullanilan'], 2) ?> ₺</strong>
-            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Cüzdandan Kullanılan:</span>
+                                <strong><?= number_format($siparis['bakiye_kullanilan'], 2) ?> ₺</strong>
+                            </div>
 
-            <div class="d-flex justify-content-between">
-                <span>Karttan / Diğer Ödeme:</span>
-                <strong><?= number_format($siparis['karttan_odenen'], 2) ?> ₺</strong>
-            </div>
-        </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Karttan / Diğer Ödeme:</span>
+                                <strong><?= number_format($siparis['karttan_odenen'], 2) ?> ₺</strong>
+                            </div>
+                        </div>
 
                     <?php else: ?>
 

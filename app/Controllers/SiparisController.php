@@ -155,6 +155,7 @@ class SiparisController extends BaseController
         'kargo_adresi' => $kargoAdresi,
         'odeme_yontemi' => $odemeYontemi,
         'durum' => 'beklemede',
+        'siparis_asamasi' => 'beklemede',
         'tarih' => date('Y-m-d H:i:s'),
         'bakiye_kullanilan' => $bakiyeKullanilan,
         'karttan_odenen' => $karttanOdenen
@@ -316,5 +317,41 @@ public function iptal($siparisId)
 
     return redirect()->to('siparis-detay/' . $siparisId)
         ->with('basari', 'Sipariş iptal edildi. Ürün stokları geri eklendi ve ücret cüzdanınıza aktarıldı.');
+}
+public function teslimAldim($siparisId)
+{
+    if (!session()->get('giris_yapildi')) {
+        return redirect()->to('/login')->with('hata', 'Bu işlem için giriş yapmalısınız.');
+    }
+
+    $kullaniciId = session()->get('kullanici_id');
+
+    $db = \Config\Database::connect();
+
+    $siparis = $db->table('siparisler')
+        ->where('id', $siparisId)
+        ->where('kullanici_id', $kullaniciId)
+        ->get()
+        ->getRowArray();
+
+    if (!$siparis) {
+        return redirect()->to('/profil')->with('hata', 'Sipariş bulunamadı.');
+    }
+
+    if ($siparis['siparis_asamasi'] != 'teslim_edildi') {
+        return redirect()->to('siparis-detay/' . $siparisId)
+            ->with('hata', 'Bu sipariş henüz teslim edildi aşamasında değil.');
+    }
+
+    $db->table('siparisler')
+        ->where('id', $siparisId)
+        ->where('kullanici_id', $kullaniciId)
+        ->update([
+            'durum' => 'teslim_alindi',
+            'siparis_asamasi' => 'teslim_alindi'
+        ]);
+
+    return redirect()->to('siparis-detay/' . $siparisId)
+        ->with('basari', 'Sipariş teslim alındı olarak işaretlendi.');
 }
 }

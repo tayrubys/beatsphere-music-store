@@ -17,6 +17,7 @@ class SiparisModel extends Model
         'durum',
         'tarih',
         'bakiye_kullanilan',
-        'karttan_odenen'
+        'karttan_odenen',
+        'siparis_asamasi'
     ];
 }
