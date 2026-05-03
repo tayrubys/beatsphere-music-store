@@ -30,13 +30,42 @@
                         <h5 class="fw-bold mb-3">Teslimat Bilgileri</h5>
 
                         <div class="mb-3">
-                            <label class="form-label">Kargo Adresi</label>
-                            <textarea name="kargo_adresi"
-                                      class="form-control"
-                                      rows="4"
-                                      placeholder="Kargo adresinizi giriniz"
-                                      required></textarea>
-                        </div>
+    <label class="form-label">Kargo Adresi</label>
+
+    <?php if (!empty($kullanici['adres'])): ?>
+        <div class="alert alert-light border mb-3">
+            <strong>Profilinizde kayıtlı adres:</strong>
+            <div style="white-space: pre-line;" class="mt-2">
+                <?= esc($kullanici['adres']) ?>
+            </div>
+
+            <button type="button"
+                    id="profilAdresBtn"
+                    class="btn btn-outline-primary btn-sm mt-3">
+                Profilimdeki Adresi Kullan
+            </button>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-warning mb-3">
+            Profilinizde kayıtlı adres bulunmuyor. İsterseniz aşağıya yeni kargo adresi yazabilirsiniz.
+            <br>
+            <a href="<?= base_url('profil') ?>" class="alert-link">
+                Profilime gidip adres ekle
+            </a>
+        </div>
+    <?php endif; ?>
+
+    <textarea name="kargo_adresi"
+              id="kargo_adresi"
+              class="form-control"
+              rows="5"
+              placeholder="Kargo adresinizi giriniz"
+              required></textarea>
+
+    <small class="text-muted">
+        İsterseniz profil adresinizi kullanabilir, isterseniz farklı bir kargo adresi yazabilirsiniz.
+    </small>
+</div>
 
                         <h5 class="fw-bold mt-4 mb-3">Ödeme Yöntemi</h5>
 
@@ -333,6 +362,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     kartAlanlariniKontrolEt();
+    const profilAdresBtn = document.getElementById('profilAdresBtn');
+const kargoAdresi = document.getElementById('kargo_adresi');
+
+if (profilAdresBtn && kargoAdresi) {
+    profilAdresBtn.addEventListener('click', function () {
+        kargoAdresi.value = <?= json_encode($kullanici['adres'] ?? '') ?>;
+    });
+}
 });
 </script>
 
