@@ -1,5 +1,5 @@
-<div align="center">
 #  BeatSphere
+<div align="center">
  
 ![CodeIgniter](https://img.shields.io/badge/CODEIGNITER-4-3498DB?style=for-the-badge&logo=codeigniter&logoColor=white&labelColor=141E30)
 ![PHP](https://img.shields.io/badge/PHP-BACKEND-3498DB?style=for-the-badge&logo=php&logoColor=white&labelColor=0d1b2f)
