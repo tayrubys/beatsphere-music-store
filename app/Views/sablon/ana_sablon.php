@@ -398,15 +398,15 @@
                         <h5 class="text-white mt-4 mb-3">Sosyal Medya</h5>
 
                         <div class="social-wrapper">
-                            <a href="#" class="social-btn">
+                            <a href="https://www.facebook.com/kou92official/?locale=tr_TR" class="social-btn">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
 
-                            <a href="#" class="social-btn">
+                            <a href="https://www.instagram.com/kou92official/" class="social-btn">
                                 <i class="fab fa-instagram"></i>
                             </a>
 
-                            <a href="#" class="social-btn">
+                            <a href="https://www.youtube.com/c/kocaeli%C3%BCniversitesi" class="social-btn">
                                 <i class="fab fa-youtube"></i>
                             </a>
                         </div>

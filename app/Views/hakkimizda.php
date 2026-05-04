@@ -18,7 +18,7 @@
             <ul class="list-unstyled mt-4">
                 <li class="mb-2"><i class="fa-solid fa-location-dot text-danger me-2"></i> <strong>Adres:</strong> Cumhuriyet Cd. İzmit Merkez, Kocaeli / Türkiye</li>
                 <li class="mb-2"><i class="fa-solid fa-envelope text-primary me-2"></i> <strong>E-Posta:</strong> iletisim@beatsphere.com</li>
-                <li><i class="fa-solid fa-phone text-success me-2"></i> <strong>Telefon:</strong> 0850 123 45 67</li>
+                <li><i class="fa-solid fa-phone text-success me-2"></i> <strong>Telefon:</strong>+90 555 555 55 55</li>
             </ul>
         </div>
 
