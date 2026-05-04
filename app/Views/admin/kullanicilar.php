@@ -14,7 +14,7 @@
 
         <div class="d-flex gap-2">
             <a href="<?= base_url('admin/kullanici-ekle') ?>" class="btn btn-success">
-                Yeni Admin Ekle
+                Yeni Kullanıcı Ekle
             </a>
 
             <a href="<?= base_url('admin') ?>" class="btn btn-outline-secondary">

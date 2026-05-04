@@ -135,9 +135,17 @@
                     </p>
 
                     <p class="mb-0">
-                        <strong>Durum:</strong>
-                        <?= esc($siparis['durum']) ?>
-                    </p>
+    <strong>Durum:</strong>
+
+    <?php if ($siparis['durum'] == 'kargoya verildi'): ?>
+        <span class="badge bg-warning">Kargoya Verildi</span>
+    <?php elseif ($siparis['durum'] == 'teslim edildi'): ?>
+        <span class="badge bg-success">Teslim Edildi</span>
+    <?php else: ?>
+        <span class="badge bg-secondary"><?= esc($siparis['durum']) ?></span>
+    <?php endif; ?>
+
+</p>
                 </div>
             </div>
 

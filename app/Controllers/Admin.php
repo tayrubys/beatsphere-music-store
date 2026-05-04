@@ -318,34 +318,38 @@ class Admin extends BaseController
         return redirect()->to('/admin/urunler')->with('basari', 'Ürün silindi.');
     }
 
-    public function urunDurumDegistir($urunId)
-    {
-        $kontrol = $this->adminKontrol();
-        if ($kontrol) {
-            return $kontrol;
-        }
-
-        $db = \Config\Database::connect();
-
-        $urun = $db->table('urunler')
-            ->where('id', $urunId)
-            ->get()
-            ->getRowArray();
-
-        if (!$urun) {
-            return redirect()->to('/admin/urunler')->with('hata', 'Ürün bulunamadı.');
-        }
-
-        $yeniDurum = ($urun['durum'] == 'satista') ? 'kaldirildi' : 'satista';
-
-        $db->table('urunler')
-            ->where('id', $urunId)
-            ->update([
-                'durum' => $yeniDurum
-            ]);
-
-        return redirect()->to('/admin/urunler')->with('basari', 'Ürün satış durumu güncellendi.');
+   public function urunDurumDegistir($urunId)
+{
+    $kontrol = $this->adminKontrol();
+    if ($kontrol) {
+        return $kontrol;
     }
+
+    $db = \Config\Database::connect();
+
+    $urun = $db->table('urunler')
+        ->where('id', $urunId)
+        ->get()
+        ->getRowArray();
+
+    if (!$urun) {
+        return redirect()->to('/admin/urunler')->with('hata', 'Ürün bulunamadı.');
+    }
+
+    $yeniDurum = ($urun['durum'] == 'satista') ? 'kaldirildi' : 'satista';
+
+    $db->table('urunler')
+        ->where('id', $urunId)
+        ->update([
+            'durum' => $yeniDurum
+        ]);
+
+    if ($yeniDurum == 'satista') {
+        return redirect()->to('/admin/urunler')->with('basari', 'Ürün satışa sunuldu.');
+    } else {
+        return redirect()->to('/admin/urunler')->with('basari', 'Ürün satıştan kaldırıldı.');
+    }
+}
 
     public function urunPopulerDegistir($urunId)
     {
@@ -403,56 +407,67 @@ public function kullaniciEkle()
     }
 
     return view('admin/kullanici_form', [
-        'baslik' => 'Yeni Admin Kullanıcısı Ekle',
+        'baslik' => 'Yeni Kullanıcı Ekle',
         'islem' => 'ekle',
         'kullanici' => null
     ]);
 }
-    public function kullaniciKaydet()
-    {
-        $kontrol = $this->adminKontrol();
-        if ($kontrol) {
-            return $kontrol;
-        }
 
-        $adSoyad = $this->request->getPost('ad_soyad');
-        $eposta = $this->request->getPost('eposta');
-        $telefon = $this->request->getPost('telefon');
-        $adres = $this->request->getPost('adres');
-        $sifre = $this->request->getPost('sifre');
-
-        if (empty($adSoyad) || empty($eposta) || empty($telefon) || empty($adres) || empty($sifre)) {
-            return redirect()->back()->with('hata', 'Lütfen tüm alanları doldurun.');
-        }
-
-        if (strlen($sifre) < 6) {
-            return redirect()->back()->with('hata', 'Şifre en az 6 karakter olmalıdır.');
-        }
-
-        $db = \Config\Database::connect();
-
-        $varMi = $db->table('kullanicilar')
-            ->where('eposta', $eposta)
-            ->get()
-            ->getRowArray();
-
-        if ($varMi) {
-            return redirect()->back()->with('hata', 'Bu e-posta adresi zaten kullanılıyor.');
-        }
-
-        $db->table('kullanicilar')->insert([
-            'ad_soyad' => $adSoyad,
-            'eposta' => $eposta,
-            'telefon' => $telefon,
-            'adres' => $adres,
-            'sifre' => password_hash($sifre, PASSWORD_DEFAULT),
-            'rol' => 'admin',
-            'bakiye' => 0,
-            'durum' => 'aktif'
-        ]);
-
-        return redirect()->to('/admin/kullanicilar')->with('basari', 'Yeni admin kullanıcısı başarıyla eklendi.');
+public function kullaniciKaydet()
+{
+    $kontrol = $this->adminKontrol();
+    if ($kontrol) {
+        return $kontrol;
     }
+
+    $adSoyad = $this->request->getPost('ad_soyad');
+    $eposta = $this->request->getPost('eposta');
+    $telefon = $this->request->getPost('telefon');
+    $adres = $this->request->getPost('adres');
+    $sifre = $this->request->getPost('sifre');
+    $rol = $this->request->getPost('rol');
+    $durum = $this->request->getPost('durum');
+
+    if (
+        empty($adSoyad) ||
+        empty($eposta) ||
+        empty($telefon) ||
+        empty($adres) ||
+        empty($sifre) ||
+        empty($rol) ||
+        empty($durum)
+    ) {
+        return redirect()->back()->with('hata', 'Lütfen tüm alanları doldurun.');
+    }
+
+    if (strlen($sifre) < 6) {
+        return redirect()->back()->with('hata', 'Şifre en az 6 karakter olmalıdır.');
+    }
+
+    $db = \Config\Database::connect();
+
+    $varMi = $db->table('kullanicilar')
+        ->where('eposta', $eposta)
+        ->get()
+        ->getRowArray();
+
+    if ($varMi) {
+        return redirect()->back()->with('hata', 'Bu e-posta adresi zaten kullanılıyor.');
+    }
+
+    $db->table('kullanicilar')->insert([
+        'ad_soyad' => $adSoyad,
+        'eposta' => $eposta,
+        'telefon' => $telefon,
+        'adres' => $adres,
+        'sifre' => password_hash($sifre, PASSWORD_DEFAULT),
+        'rol' => $rol,
+        'bakiye' => 0,
+        'durum' => $durum,
+    ]);
+
+    return redirect()->to('/admin/kullanicilar')->with('basari', 'Yeni kullanıcı başarıyla eklendi.');
+}
 
     public function kullaniciDuzenle($kullaniciId)
     {

@@ -113,7 +113,7 @@
                                 Satışta
                             </option>
 
-                            <option value="satista_degil"
+                            <option value="kaldirildi"
                                 <?= isset($urun['durum']) && $urun['durum'] == 'kaldirildi' ? 'selected' : '' ?>>
                                 Satışta Değil
                             </option>

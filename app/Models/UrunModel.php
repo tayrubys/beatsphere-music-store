@@ -15,7 +15,7 @@ class UrunModel extends Model
     protected $allowedFields = ['kategori_id', 'album_adi', 'sanatci', 'fiyat', 'stok', 'resim', 'durum','populer'];
     public function kategoriyeGoreUrunler($kategori_id){
         return $this->where('kategori_id', $kategori_id)
-                    ->where('durum', 1)
+                    ->where('durum', 'satista')
                     ->findAll();
     }
 }

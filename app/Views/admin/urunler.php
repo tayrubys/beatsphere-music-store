@@ -116,11 +116,20 @@
                                                class="btn btn-sm btn-primary">
                                                 Düzenle
                                             </a>
-                                            <a href="<?= base_url('admin/urun-durum-degistir/' . $urun['id']) ?>"
-                                               class="btn btn-sm btn-warning"
-                                               onclick="return confirm('Ürünün satış durumunu değiştirmek istiyor musunuz?');">
-                                                Durum
-                                            </a>
+
+                                            <?php if ($urun['durum'] == 'satista'): ?>
+                                                <a href="<?= base_url('admin/urun-durum-degistir/' . $urun['id']) ?>"
+                                                   class="btn btn-sm btn-warning"
+                                                   onclick="return confirm('Bu ürünü satıştan kaldırmak istiyor musunuz?');">
+                                                    Satıştan Kaldır
+                                                </a>
+                                            <?php else: ?>
+                                                <a href="<?= base_url('admin/urun-durum-degistir/' . $urun['id']) ?>"
+                                                   class="btn btn-sm btn-success"
+                                                   onclick="return confirm('Bu ürünü tekrar satışa sunmak istiyor musunuz?');">
+                                                    Satışa Sun
+                                                </a>
+                                            <?php endif; ?>
 
                                             <a href="<?= base_url('admin/urun-populer-degistir/' . $urun['id']) ?>"
                                                class="btn btn-sm btn-info text-white"
@@ -130,16 +139,14 @@
 
                                             <a href="<?= base_url('admin/urun-sil/' . $urun['id']) ?>"
                                                class="btn btn-sm btn-danger"
-                                               onclick="return confirm('Bu ürünü silmek istiyor musunuz?');">
+                                               onclick="return confirm('Bu ürünü silmek istiyor musunuz? Siparişte kullanılan ürünleri silmemeye dikkat edin.');">
                                                 Sil
                                             </a>
-
                                         </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
-
                     </table>
                 </div>
 

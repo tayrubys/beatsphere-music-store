@@ -18,7 +18,7 @@ $formAction = ($islem == 'ekle')
 
             <?php if ($islem == 'ekle'): ?>
                 <p class="text-muted mb-0">
-                    Bu ekrandan yalnızca admin yetkisine sahip kullanıcı hesabı oluşturulur.
+                    Bu ekrandan user veya admin rolüne sahip yeni kullanıcı hesabı oluşturabilirsiniz.
                 </p>
             <?php else: ?>
                 <p class="text-muted mb-0">
@@ -97,33 +97,33 @@ $formAction = ($islem == 'ekle')
                                    required>
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Rol</label>
-                            <select name="rol" class="form-select" required>
-                                <option value="user" <?= $kullanici['rol'] == 'user' ? 'selected' : '' ?>>
-                                    User
-                                </option>
-
-                                <option value="admin" <?= $kullanici['rol'] == 'admin' ? 'selected' : '' ?>>
-                                    Admin
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Durum</label>
-                            <select name="durum" class="form-select" required>
-                                <option value="aktif" <?= $kullanici['durum'] == 'aktif' ? 'selected' : '' ?>>
-                                    Aktif
-                                </option>
-
-                                <option value="pasif" <?= $kullanici['durum'] == 'pasif' ? 'selected' : '' ?>>
-                                    Pasif
-                                </option>
-                            </select>
-                        </div>
-
                     <?php endif; ?>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Rol</label>
+                        <select name="rol" class="form-select" required>
+                            <option value="user" <?= isset($kullanici['rol']) && $kullanici['rol'] == 'user' ? 'selected' : '' ?>>
+                                User
+                            </option>
+
+                            <option value="admin" <?= isset($kullanici['rol']) && $kullanici['rol'] == 'admin' ? 'selected' : '' ?>>
+                                Admin
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Durum</label>
+                        <select name="durum" class="form-select" required>
+                            <option value="aktif" <?= isset($kullanici['durum']) && $kullanici['durum'] == 'aktif' ? 'selected' : '' ?>>
+                                Aktif
+                            </option>
+
+                            <option value="pasif" <?= isset($kullanici['durum']) && $kullanici['durum'] == 'pasif' ? 'selected' : '' ?>>
+                                Pasif
+                            </option>
+                        </select>
+                    </div>
 
                     <div class="col-md-12 mb-3">
                         <label class="form-label">Adres</label>
@@ -136,15 +136,13 @@ $formAction = ($islem == 'ekle')
                 </div>
 
                 <?php if ($islem == 'ekle'): ?>
-                    <div class="alert alert-warning">
-                        Bu ekrandan oluşturulan hesap otomatik olarak
-                        <strong>admin</strong> rolünde ve
-                        <strong>aktif</strong> durumda kaydedilir.
+                    <div class="alert alert-info">
+                        Yeni kullanıcı için rol ve durum seçimi yapabilirsiniz. Bakiye otomatik olarak 0 TL başlatılır.
                     </div>
                 <?php endif; ?>
 
                 <button type="submit" class="btn btn-success">
-                    <?= $islem == 'ekle' ? 'Admin Kullanıcısı Ekle' : 'Kullanıcıyı Güncelle' ?>
+                    <?= $islem == 'ekle' ? 'Kullanıcı Ekle' : 'Kullanıcıyı Güncelle' ?>
                 </button>
 
             </form>

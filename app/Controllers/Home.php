@@ -12,7 +12,6 @@ class Home extends BaseController
     $veri['urunler'] = $urunModel
         ->where('durum', 'satista')
         ->where('populer', 1)
-        ->limit(12)
         ->findAll();
 
     return view('anasayfa', $veri);
