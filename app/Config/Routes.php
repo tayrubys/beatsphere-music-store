@@ -37,6 +37,7 @@ $routes->get('/admin/urun-ekle', 'Admin::urunEkle');
 $routes->post('/admin/urun-kaydet', 'Admin::urunKaydet');
 $routes->get('/admin/urun-duzenle/(:num)', 'Admin::urunDuzenle/$1');
 $routes->post('/admin/urun-guncelle/(:num)', 'Admin::urunGuncelle/$1');
+$routes->get('/admin/urun-resim-sil/(:num)', 'Admin::urunResimSil/$1');
 //admin kullanıcı yönetimi
 $routes->get('/admin/kullanicilar', 'Admin::kullanicilar');
 $routes->get('/admin/kullanici-ekle', 'Admin::kullaniciEkle');

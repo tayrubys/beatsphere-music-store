@@ -610,4 +610,28 @@ public function kullaniciKaydet()
 
         return redirect()->to('/admin/kullanicilar')->with('basari', 'Kullanıcı silindi.');
     }
+    public function urunResimSil($urunId)
+{
+    $kontrol = $this->adminKontrol();
+    if ($kontrol) {
+        return $kontrol;
+    }
+
+    $db = \Config\Database::connect();
+
+    $urun = $db->table('urunler')
+        ->where('id', $urunId)
+        ->get()
+        ->getRowArray();
+
+    if (!$urun) {
+        return redirect()->to('/admin/urunler')->with('hata', 'Ürün bulunamadı.');
+    }
+
+    $db->table('urunler')
+        ->where('id', $urunId)
+        ->update(['resim' => null]);
+
+    return redirect()->to('/admin/urun-duzenle/' . $urunId)->with('basari', 'Ürün resmi silindi.');
+}
 }

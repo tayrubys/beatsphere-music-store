@@ -94,16 +94,23 @@
                                class="form-control"
                                value="<?= esc($urun['resim'] ?? '') ?>"
                                placeholder="https://..."
-                               required>
+                               >
                     </div>
 
                     <?php if (!empty($urun['resim'])): ?>
-                        <div class="col-md-12 mb-3">
-                            <label class="form-label">Mevcut Resim</label><br>
-                            <img src="<?= esc($urun['resim']) ?>"
-                                 style="width:120px; height:120px; object-fit:cover; border-radius:12px;">
-                        </div>
-                    <?php endif; ?>
+    <div class="col-md-12 mb-3">
+        <label class="form-label">Mevcut Resim</label><br>
+        <img src="<?= esc($urun['resim']) ?>"
+             style="width:120px; height:120px; object-fit:cover; border-radius:12px;">
+        <div class="mt-2">
+            <a href="<?= base_url('admin/urun-resim-sil/' . ($urun['id'] ?? '')) ?>"
+               class="btn btn-sm btn-outline-danger"
+               onclick="return confirm('Resmi silmek istediğinize emin misiniz?')">
+                 Resmi Sil
+            </a>
+        </div>
+    </div>
+<?php endif; ?>
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Satış Durumu</label>
