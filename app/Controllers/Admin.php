@@ -176,42 +176,54 @@ class Admin extends BaseController
     }
 
     public function urunKaydet()
-    {
-        $kontrol = $this->adminKontrol();
-        if ($kontrol) {
-            return $kontrol;
-        }
-
-        $kategoriId = $this->request->getPost('kategori_id');
-        $albumAdi = $this->request->getPost('album_adi');
-        $sanatci = $this->request->getPost('sanatci');
-        $fiyat = $this->request->getPost('fiyat');
-        $stok = $this->request->getPost('stok');
-        $resim = $this->request->getPost('resim');
-        $durum = $this->request->getPost('durum');
-        $populer = $this->request->getPost('populer');
-        $aciklama = $this->request->getPost('aciklama');
-
-        if (empty($kategoriId) || empty($albumAdi) || empty($sanatci) || empty($fiyat) || $stok === '') {
-            return redirect()->back()->with('hata', 'Lütfen zorunlu alanları doldurun.');
-        }
-
-        $db = \Config\Database::connect();
-
-        $db->table('urunler')->insert([
-            'kategori_id' => $kategoriId,
-            'album_adi' => $albumAdi,
-            'sanatci' => $sanatci,
-            'fiyat' => $fiyat,
-            'stok' => $stok,
-            'resim' => $resim,
-            'durum' => $durum,
-            'populer' => $populer,
-            'aciklama' => $aciklama
-        ]);
-
-        return redirect()->to('/admin/urunler')->with('basari', 'Ürün başarıyla eklendi.');
+{
+    $kontrol = $this->adminKontrol();
+    if ($kontrol) {
+        return $kontrol;
     }
+
+    $kategoriId = $this->request->getPost('kategori_id');
+    $albumAdi   = $this->request->getPost('album_adi');
+    $sanatci    = $this->request->getPost('sanatci');
+    $fiyat      = $this->request->getPost('fiyat');
+    $stok       = $this->request->getPost('stok');
+    $durum      = $this->request->getPost('durum');
+    $populer    = $this->request->getPost('populer');
+    $aciklama   = $this->request->getPost('aciklama');
+
+    if (empty($kategoriId) || empty($albumAdi) || empty($sanatci) || empty($fiyat) || $stok === '') {
+        return redirect()->back()->with('hata', 'Lütfen zorunlu alanları doldurun.');
+    }
+
+    // Önce dosya yükleme kontrol et, yoksa URL al
+    $resim = $this->request->getPost('resim');
+
+    $dosya = $this->request->getFile('resim_dosya');
+    if ($dosya && $dosya->isValid() && !$dosya->hasMoved()) {
+        if ($dosya->getSize() > 2 * 1024 * 1024) {
+            return redirect()->back()->with('hata', 'Resim dosyası 2 MB\'dan büyük olamaz.');
+        }
+        $yeniAd = $dosya->getRandomName();
+        $dosya->move(FCPATH . 'uploads/urunler', $yeniAd);
+        $resim = base_url('uploads/urunler/' . $yeniAd);
+    }
+
+    $db = \Config\Database::connect();
+
+    $db->table('urunler')->insert([
+        'kategori_id' => $kategoriId,
+        'album_adi'   => $albumAdi,
+        'sanatci'     => $sanatci,
+        'fiyat'       => $fiyat,
+        'stok'        => $stok,
+        'resim'       => $resim,
+        'durum'       => $durum,
+        'populer'     => $populer,
+        'aciklama'    => $aciklama
+    ]);
+
+    return redirect()->to('/admin/urunler')->with('basari', 'Ürün başarıyla eklendi.');
+}
 
     public function urunDuzenle($urunId)
     {
@@ -245,53 +257,68 @@ class Admin extends BaseController
     }
 
     public function urunGuncelle($urunId)
-    {
-        $kontrol = $this->adminKontrol();
-        if ($kontrol) {
-            return $kontrol;
-        }
-
-        $kategoriId = $this->request->getPost('kategori_id');
-        $albumAdi = $this->request->getPost('album_adi');
-        $sanatci = $this->request->getPost('sanatci');
-        $fiyat = $this->request->getPost('fiyat');
-        $stok = $this->request->getPost('stok');
-        $resim = $this->request->getPost('resim');
-        $durum = $this->request->getPost('durum');
-        $populer = $this->request->getPost('populer');
-        $aciklama = $this->request->getPost('aciklama');
-
-        if (empty($kategoriId) || empty($albumAdi) || empty($sanatci) || empty($fiyat) || $stok === '') {
-            return redirect()->back()->with('hata', 'Lütfen zorunlu alanları doldurun.');
-        }
-
-        $db = \Config\Database::connect();
-
-        $urun = $db->table('urunler')
-            ->where('id', $urunId)
-            ->get()
-            ->getRowArray();
-
-        if (!$urun) {
-            return redirect()->to('/admin/urunler')->with('hata', 'Ürün bulunamadı.');
-        }
-
-        $db->table('urunler')
-            ->where('id', $urunId)
-            ->update([
-                'kategori_id' => $kategoriId,
-                'album_adi' => $albumAdi,
-                'sanatci' => $sanatci,
-                'fiyat' => $fiyat,
-                'stok' => $stok,
-                'resim' => $resim,
-                'durum' => $durum,
-                'populer' => $populer,
-                'aciklama' => $aciklama
-            ]);
-
-        return redirect()->to('/admin/urunler')->with('basari', 'Ürün başarıyla güncellendi.');
+{
+    $kontrol = $this->adminKontrol();
+    if ($kontrol) {
+        return $kontrol;
     }
+
+    $kategoriId = $this->request->getPost('kategori_id');
+    $albumAdi   = $this->request->getPost('album_adi');
+    $sanatci    = $this->request->getPost('sanatci');
+    $fiyat      = $this->request->getPost('fiyat');
+    $stok       = $this->request->getPost('stok');
+    $durum      = $this->request->getPost('durum');
+    $populer    = $this->request->getPost('populer');
+    $aciklama   = $this->request->getPost('aciklama');
+
+    if (empty($kategoriId) || empty($albumAdi) || empty($sanatci) || empty($fiyat) || $stok === '') {
+        return redirect()->back()->with('hata', 'Lütfen zorunlu alanları doldurun.');
+    }
+
+    $db = \Config\Database::connect();
+
+    $urun = $db->table('urunler')
+        ->where('id', $urunId)
+        ->get()
+        ->getRowArray();
+
+    if (!$urun) {
+        return redirect()->to('/admin/urunler')->with('hata', 'Ürün bulunamadı.');
+    }
+
+    // Önce dosya yükleme kontrol et, yoksa URL al, o da boşsa mevcut resmi koru
+    $resim = $this->request->getPost('resim');
+    if (empty($resim)) {
+        $resim = $urun['resim'];
+    }
+
+    $dosya = $this->request->getFile('resim_dosya');
+    if ($dosya && $dosya->isValid() && !$dosya->hasMoved()) {
+        if ($dosya->getSize() > 2 * 1024 * 1024) {
+            return redirect()->back()->with('hata', 'Resim dosyası 2 MB\'dan büyük olamaz.');
+        }
+        $yeniAd = $dosya->getRandomName();
+        $dosya->move(FCPATH . 'uploads/urunler', $yeniAd);
+        $resim = base_url('uploads/urunler/' . $yeniAd);
+    }
+
+    $db->table('urunler')
+        ->where('id', $urunId)
+        ->update([
+            'kategori_id' => $kategoriId,
+            'album_adi'   => $albumAdi,
+            'sanatci'     => $sanatci,
+            'fiyat'       => $fiyat,
+            'stok'        => $stok,
+            'resim'       => $resim,
+            'durum'       => $durum,
+            'populer'     => $populer,
+            'aciklama'    => $aciklama
+        ]);
+
+    return redirect()->to('/admin/urunler')->with('basari', 'Ürün başarıyla güncellendi.');
+}
 
     public function urunSil($urunId)
     {
