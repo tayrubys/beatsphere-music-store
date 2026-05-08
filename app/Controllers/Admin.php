@@ -661,4 +661,94 @@ public function kullaniciKaydet()
 
     return redirect()->to('/admin/urun-duzenle/' . $urunId)->with('basari', 'Ürün resmi silindi.');
 }
+public function profilGoruntule()
+{
+    $kontrol = $this->adminKontrol();
+    if ($kontrol) {
+        return $kontrol;
+    }
+
+    $db = \Config\Database::connect();
+    $kullanici = $db->table('kullanicilar')
+        ->where('id', session()->get('kullanici_id'))
+        ->get()
+        ->getRowArray();
+
+    return view('admin/profil', ['kullanici' => $kullanici]);
+}
+
+public function sifreGuncelle()
+{
+    $kontrol = $this->adminKontrol();
+    if ($kontrol) {
+        return $kontrol;
+    }
+
+    $mevcutSifre   = $this->request->getPost('mevcut_sifre');
+    $yeniSifre     = $this->request->getPost('yeni_sifre');
+    $yeniSifreTekrar = $this->request->getPost('yeni_sifre_tekrar');
+
+    if (empty($mevcutSifre) || empty($yeniSifre) || empty($yeniSifreTekrar)) {
+        return redirect()->to('/admin/profil')->with('hata', 'Lütfen tüm alanları doldurun.');
+    }
+
+    if ($yeniSifre != $yeniSifreTekrar) {
+        return redirect()->to('/admin/profil')->with('hata', 'Yeni şifreler eşleşmiyor.');
+    }
+
+    if (strlen($yeniSifre) < 6) {
+        return redirect()->to('/admin/profil')->with('hata', 'Şifre en az 6 karakter olmalıdır.');
+    }
+
+    $db = \Config\Database::connect();
+    $kullanici = $db->table('kullanicilar')
+        ->where('id', session()->get('kullanici_id'))
+        ->get()
+        ->getRowArray();
+
+    if (!password_verify($mevcutSifre, $kullanici['sifre'])) {
+        return redirect()->to('/admin/profil')->with('hata', 'Mevcut şifreniz hatalı.');
+    }
+
+    $db->table('kullanicilar')
+        ->where('id', session()->get('kullanici_id'))
+        ->update(['sifre' => password_hash($yeniSifre, PASSWORD_DEFAULT)]);
+
+    return redirect()->to('/admin/profil')->with('basari', 'Şifreniz başarıyla güncellendi.');
+}
+public function profilGuncelle()
+{
+    $kontrol = $this->adminKontrol();
+    if ($kontrol) {
+        return $kontrol;
+    }
+
+    $kullaniciId = session()->get('kullanici_id');
+    $adSoyad     = $this->request->getPost('ad_soyad');
+    $eposta      = $this->request->getPost('eposta');
+    $telefon     = $this->request->getPost('telefon');
+
+    if (empty($adSoyad) || empty($eposta) || empty($telefon)) {
+        return redirect()->to('/admin/profil')->with('hata', 'Lütfen tüm alanları doldurun.');
+    }
+
+    $db = \Config\Database::connect();
+
+    $varMi = $db->table('kullanicilar')
+        ->where('eposta', $eposta)
+        ->where('id !=', $kullaniciId)
+        ->get()->getRowArray();
+
+    if ($varMi) {
+        return redirect()->to('/admin/profil')->with('hata', 'Bu e-posta başka bir kullanıcı tarafından kullanılıyor.');
+    }
+
+    $db->table('kullanicilar')
+        ->where('id', $kullaniciId)
+        ->update(['ad_soyad' => $adSoyad, 'eposta' => $eposta, 'telefon' => $telefon]);
+
+    session()->set(['ad_soyad' => $adSoyad, 'eposta' => $eposta]);
+
+    return redirect()->to('/admin/profil')->with('basari', 'Bilgileriniz güncellendi.');
+}
 }

@@ -185,9 +185,10 @@
 
                                 <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
                                     <li>
-                                        <span class="dropdown-item-text text-muted">
-                                            Admin hesabı
-                                        </span>
+<a class="dropdown-item fw-bold" href="<?= base_url('admin/profil') ?>" style="color: #141E30;">
+    <i class="fa-solid fa-id-card me-2"></i>
+    Profilim / Hesabım
+</a>
                                     </li>
 
                                     <li><hr class="dropdown-divider"></li>

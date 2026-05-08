@@ -91,10 +91,12 @@
                                     <td>
                                         <div class="d-flex flex-wrap gap-1">
 
-                                            <a href="<?= base_url('admin/kullanici-duzenle/' . $kullanici['id']) ?>"
-                                               class="btn btn-sm btn-primary">
-                                                Düzenle
-                                            </a>
+        <?php if ($kullanici['id'] != session()->get('kullanici_id')): ?>
+            <a href="<?= base_url('admin/kullanici-duzenle/' . $kullanici['id']) ?>"
+               class="btn btn-sm btn-primary">
+                Düzenle
+            </a>
+        <?php endif; ?>
 
                                             <?php if ($kullanici['id'] != session()->get('kullanici_id')): ?>
 

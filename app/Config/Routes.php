@@ -46,6 +46,10 @@ $routes->get('/admin/kullanici-duzenle/(:num)', 'Admin::kullaniciDuzenle/$1');
 $routes->post('/admin/kullanici-guncelle/(:num)', 'Admin::kullaniciGuncelle/$1');
 $routes->get('/admin/kullanici-durum-degistir/(:num)', 'Admin::kullaniciDurumDegistir/$1');
 $routes->get('/admin/kullanici-sil/(:num)', 'Admin::kullaniciSil/$1');
+//admin kendi yonetımı
+$routes->get('/admin/profil', 'Admin::profilGoruntule');
+$routes->post('/admin/sifre-guncelle', 'Admin::sifreGuncelle');
+$routes->post('/admin/profil-guncelle', 'Admin::profilGuncelle');
 
 //urun ve kategori
 $routes->get('/kategori/(:num)', 'UrunController::kategori/$1');
