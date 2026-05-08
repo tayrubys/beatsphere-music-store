@@ -286,10 +286,12 @@ $aktifAsamaIndex = $asamaSirasi[$siparis['siparis_asamasi']] ?? 0;
                     </p>
 <hr>
 
-<a href="<?= base_url('siparis-fatura/' . $siparis['id']) ?>"
-   class="btn btn-outline-primary w-100">
-    Fatura Görüntüle
-</a>
+<?php if ($siparis['durum'] != 'beklemede' && $siparis['durum'] != 'iptal'): ?>
+    <a href="<?= base_url('siparis-fatura/' . $siparis['id']) ?>"
+       class="btn btn-outline-primary w-100">
+        Fatura Görüntüle
+    </a>
+<?php endif; ?>
 
                     <?php if ($siparis['durum'] == 'beklemede'): ?>
                         <hr>

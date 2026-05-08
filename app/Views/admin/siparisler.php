@@ -115,17 +115,24 @@
 
                                         <?php elseif ($siparis['durum'] == 'onaylandi'): ?>
 
-                                            <a href="<?= base_url('admin/siparis-asama-ilerlet/' . $siparis['id']) ?>"
-                                               class="btn btn-sm btn-primary"
-                                               onclick="return confirm('Sipariş aşamasını ilerletmek istiyor musunuz?');">
-                                                Aşamayı İlerle
-                                            </a>
+    <a href="<?= base_url('siparis-fatura/' . $siparis['id']) ?>"
+       class="btn btn-sm btn-outline-dark">
+        Fatura
+    </a>
+    <a href="<?= base_url('admin/siparis-asama-ilerlet/' . $siparis['id']) ?>"
+       class="btn btn-sm btn-primary"
+       onclick="return confirm('Sipariş aşamasını ilerletmek istiyor musunuz?');">
+        Aşamayı İlerle
+    </a>
 
-                                        <?php else: ?>
+<?php else: ?>
 
-                                            <span class="text-muted small">İşlem yok</span>
+    <a href="<?= base_url('siparis-fatura/' . $siparis['id']) ?>"
+       class="btn btn-sm btn-outline-dark">
+        Fatura
+    </a>
 
-                                        <?php endif; ?>
+<?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

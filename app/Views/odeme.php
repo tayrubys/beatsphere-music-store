@@ -219,7 +219,7 @@
             </div>
 
             <!-- SAĞ TARAF: SİPARİŞ ÖZETİ -->
-            <div class="col-lg-5">
+          <div class="col-lg-5">
 
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-4">
@@ -242,18 +242,32 @@
                             </div>
                         <?php endforeach; ?>
 
+                        <?php
+                        // Hesaplama Mantığı
+                        $bakiye = $kullanici['bakiye'] ?? 0;
+                        $kullanilacak_bakiye = ($bakiye >= $toplam) ? $toplam : $bakiye;
+                        $odenecek_tutar = $toplam - $kullanilacak_bakiye;
+                        ?>
+
                         <div class="d-flex justify-content-between mt-4">
                             <span>Ara Toplam</span>
                             <strong><?= number_format($toplam, 2) ?> ₺</strong>
                         </div>
-                        <div class="alert alert-info mt-3 mb-2">
-                            <strong>Cüzdan Bakiyeniz:</strong>
-                            <?= number_format($kullanici['bakiye'], 2) ?> ₺
-                        </div>
-                        <div class="d-flex justify-content-between mt-2">
+                        
+                        <div class="d-flex justify-content-between mt-2 mb-3">
                             <span>Kargo</span>
                             <strong>0.00 ₺</strong>
                         </div>
+
+                        <?php if($bakiye > 0): ?>
+                            <div class="alert alert-info p-3 mb-3 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong class="d-block mb-1">Cüzdandan Kullanılan</strong>
+                                    <small class="text-dark">Mevcut Bakiyeniz: <?= number_format($bakiye, 2) ?> ₺</small>
+                                </div>
+                                <h5 class="text-danger fw-bold mb-0">-<?= number_format($kullanilacak_bakiye, 2) ?> ₺</h5>
+                            </div>
+                        <?php endif; ?>
 
                         <hr>
 
@@ -261,7 +275,7 @@
                             <h5 class="fw-bold mb-0">Genel Toplam</h5>
 
                             <h4 class="fw-bold text-primary mb-0">
-                                <?= number_format($toplam, 2) ?> ₺
+                                <?= number_format($odenecek_tutar, 2) ?> ₺
                             </h4>
                         </div>
 
