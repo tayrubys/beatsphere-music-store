@@ -39,11 +39,11 @@
     </section>
 
     <section class="section-margin--small">
-        <!-- container-fluid ve px-lg-5 kullanarak sayfayı yanlara doğru genişletiyoruz -->
+
         <div class="container-fluid px-lg-5">
             <div class="row">
                 
-                <!-- SOL SÜTUN: Çizdiğin yerdeki Uzunlamasına Hava Durumu -->
+                <!--Hava Durumu -->
                 <div class="col-lg-2 d-none d-lg-flex mb-5">
                     <div class="weather-sidebar w-100 p-4 shadow-sm text-center d-flex flex-column align-items-center justify-content-center">
                         <i class="fa-solid fa-cloud-sun mb-4" style="font-size: 4rem; color: #00d2ff;"></i>
@@ -87,7 +87,25 @@
                         </div>
 
                         <div class="col-md-8 col-lg-9">
-                            <form action="#" class="form-contact contact_form" method="post" id="contactForm">
+
+                            <?php if (session()->getFlashdata('basari')): ?>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <i class="fa-solid fa-circle-check me-2"></i>
+                                    <?= session()->getFlashdata('basari') ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (session()->getFlashdata('hata')): ?>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                                    <?= session()->getFlashdata('hata') ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            <?php endif; ?>
+
+                            <form action="<?= base_url('iletisim-gonder') ?>" class="form-contact contact_form" method="post" id="contactForm">
+                                <?= csrf_field() ?>
                                 <div class="row g-3">
                                     <div class="col-lg-5">
                                         <div class="form-group mb-3">
@@ -119,7 +137,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Harita Kodu (API)
+        // harita api
         var map = L.map('iletisimHaritasi').setView([40.7654, 29.9408], 15);
         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -131,8 +149,7 @@
             .bindPopup("<b>BeatSphere Mağazası</b><br>İzmit Merkez Şubemiz.")
             .openPopup();
             
-        // Hava Durumu Kodu (API)
-        // DİKKAT: MAİLİNE GELEN API ANAHTARINI BURAYA YAPIŞTIRMAYI UNUTMA!
+        // hava durumu api
         const apiKey = "284dd4ed87d7e9be84141806a64fb4fc"; 
         const city = "Kocaeli";
 

@@ -751,4 +751,34 @@ public function profilGuncelle()
 
     return redirect()->to('/admin/profil')->with('basari', 'Bilgileriniz güncellendi.');
 }
+public function mesajlar()
+{
+    if (!session()->get('giris_yapildi') || session()->get('rol') !== 'admin') {
+        return redirect()->to('/login');
+    }
+    $mesajModel = new \App\Models\MesajModel();
+    $data['mesajlar'] = $mesajModel->orderBy('tarih', 'DESC')->findAll();
+    $data['okunmamis'] = $mesajModel->where('okundu', 0)->countAllResults();
+    return view('admin/mesajlar', $data);
+}
+
+public function mesajOkundu($id)
+{
+    if (!session()->get('giris_yapildi') || session()->get('rol') !== 'admin') {
+        return redirect()->to('/login');
+    }
+    $mesajModel = new \App\Models\MesajModel();
+    $mesajModel->update($id, ['okundu' => 1]);
+    return redirect()->to('/admin/mesajlar')->with('basari', 'Mesaj okundu olarak işaretlendi.');
+}
+
+public function mesajSil($id)
+{
+    if (!session()->get('giris_yapildi') || session()->get('rol') !== 'admin') {
+        return redirect()->to('/login');
+    }
+    $mesajModel = new \App\Models\MesajModel();
+    $mesajModel->delete($id);
+    return redirect()->to('/admin/mesajlar')->with('basari', 'Mesaj silindi.');
+}
 }

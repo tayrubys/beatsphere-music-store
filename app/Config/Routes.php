@@ -10,6 +10,10 @@ $routes->get('/', 'Home::index');
 $routes->get('hakkimizda', 'Home::hakkimizda');
 $routes->get('anasayfa','Home::anasayfa');
 $routes->get('iletisim','Home::iletisim');
+$routes->post('iletisim-gonder', 'Home::iletisimGonder');
+$routes->get('/admin/mesajlar', 'Admin::mesajlar');
+$routes->get('/admin/mesaj-okundu/(:num)', 'Admin::mesajOkundu/$1');
+$routes->get('/admin/mesaj-sil/(:num)', 'Admin::mesajSil/$1');
 $routes->get('kargo_takip','Home::kargo_takip');
 
 //kullanıcı işlemleri

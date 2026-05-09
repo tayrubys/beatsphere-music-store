@@ -61,6 +61,20 @@
             </div>
         </div>
 
+          <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">İletişim Mesajları</h5>
+                    <p class="text-muted">
+                        Ziyaretçilerin iletişim formundan gönderdiği mesajları görüntüle ve yönet.
+                    </p>
+                    <a href="<?= base_url('admin/mesajlar') ?>" class="btn btn-success">
+                        Mesajları Görüntüle
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-3">
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-body p-4">

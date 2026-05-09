@@ -86,6 +86,32 @@ class Home extends BaseController
      public function iletisim(){
         return view('iletisim');
     }
+        public function iletisimGonder(){
+        $mesajModel = new \App\Models\MesajModel();
+ 
+        $adSoyad = trim($this->request->getPost('name'));
+        $eposta  = trim($this->request->getPost('email'));
+        $konu    = trim($this->request->getPost('subject'));
+        $mesaj   = trim($this->request->getPost('message'));
+ 
+        if (empty($adSoyad) || empty($eposta) || empty($konu) || empty($mesaj)) {
+            return redirect()->to('/iletisim')->with('hata', 'Lütfen tüm alanları doldurunuz.');
+        }
+ 
+        if (!filter_var($eposta, FILTER_VALIDATE_EMAIL)) {
+            return redirect()->to('/iletisim')->with('hata', 'Geçerli bir e-posta adresi giriniz.');
+        }
+ 
+        $mesajModel->insert([
+            'ad_soyad' => $adSoyad,
+            'eposta'   => $eposta,
+            'konu'     => $konu,
+            'mesaj'    => $mesaj,
+            'okundu'   => 0,
+        ]);
+ 
+        return redirect()->to('/iletisim')->with('basari', 'Mesajınız başarıyla gönderildi. En kısa sürede dönüş yapacağız!');
+    }
     public function kategori($kategori_id){
        $urunModel = new \App\Models\UrunModel();
 
