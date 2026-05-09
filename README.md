@@ -80,6 +80,7 @@ flowchart TD
     AP --> AP1[Ürün Yönetimi\nekle / düzenle / sil]
     AP --> AP2[Kullanıcı Yönetimi\nekle / düzenle / durum]
     AP --> AP3[Sipariş Yönetimi]
+    AP --> AP4[Mesaj Yönetimi\nokundu işaretle / sil]
     AP3 --> SO[Sipariş Onayla]
     SO --> SA[Aşama İlerlet\ntedarik → kargoda → teslim edildi]
  
@@ -87,7 +88,10 @@ flowchart TD
     F --> G[Kategori\nÜrünler filtrelenir]
     F --> H[Ürün Detay\nAlbüm bilgisi + adet]
     F --> PR[Profil\nBilgi + siparişler]
+    F --> IL[İletişim Formu\nad / e-posta / konu / mesaj]
     PR --> PR1[Bilgi / Şifre Güncelle\nHesap Dondur]
+    IL --> IL1[Mesaj Gönderildi\nDB'ye kaydedilir]
+    IL1 --> AP4
  
     H --> I[Sepet\nekle / güncelle / sil]
     I -- Sepet boş --> ERR1[Hata Yönlendirme]
@@ -99,89 +103,78 @@ flowchart TD
     L -- Kullanıcı --> IPS[İptal Et\nStok + bakiye iade]
     SA --> TES[Teslim Alındı\nKullanıcı teyit eder]
     TES --> FAT[Fatura Görüntüle]
- 
-    style A fill:#1c3557,color:#b5d4f4
-    style B fill:#243B55,color:#b5d4f4
-    style C fill:#243B55,color:#b5d4f4
-    style D fill:#243B55,color:#b5d4f4
-    style E fill:#5a1a1a,color:#f09595
-    style ERR1 fill:#5a1a1a,color:#f09595
-    style ERR2 fill:#5a1a1a,color:#f09595
-    style AP fill:#3a2a00,color:#FAC775
-    style AP1 fill:#3a2a00,color:#FAC775
-    style AP2 fill:#3a2a00,color:#FAC775
-    style AP3 fill:#3a2a00,color:#FAC775
-    style SO fill:#3a2a00,color:#FAC775
-    style SA fill:#3a2a00,color:#FAC775
-    style F fill:#0a2a22,color:#9FE1CB
-    style G fill:#0a2a22,color:#9FE1CB
-    style H fill:#0a2a22,color:#9FE1CB
-    style I fill:#0a2a22,color:#9FE1CB
-    style J fill:#1a1040,color:#AFA9EC
-    style K fill:#1a1040,color:#AFA9EC
-    style L fill:#0a2010,color:#C0DD97
-    style PR fill:#0a1a30,color:#B5D4F4
-    style PR1 fill:#0a1a30,color:#B5D4F4
-    style IPS fill:#2a1010,color:#F5C4B3
-    style TES fill:#0a2010,color:#C0DD97
-    style FAT fill:#1c3557,color:#b5d4f4
 ```
  
 ---
  
 ### Varlık-İlişki (ER) Diyagramı
- 
-```mermaid
+
+ ```mermaid
 erDiagram
-    kullanicilar {
-        int id PK
-        string ad_soyad
-        string eposta
-        string telefon
-        string sifre
-        string rol
-        string adres
-        decimal bakiye
-        string durum
-    }
+    kategoriler ||--o{ urunler : "1'den çoğa (Bir kategori birden fazla ürüne sahip olabilir)"
+    kullanicilar ||--o{ sepetler : "1'den çoğa (Bir kullanıcının sepet(ler)i olabilir)"
+    kullanicilar ||--o{ siparisler : "1'den çoğa (Bir kullanıcı birden fazla sipariş verebilir)"
+    sepetler ||--o{ sepet_icerik : "1'den çoğa (Bir sepet birden fazla ürün içerebilir)"
+    urunler ||--o{ sepet_icerik : "1'den çoğa (Bir ürün birden fazla sepette yer alabilir)"
+    siparisler ||--o{ siparis_detaylari : "1'den çoğa (Bir siparişin birden fazla detayı/ürünü olabilir)"
+    urunler ||--o{ siparis_detaylari : "1'den çoğa (Bir ürün birden fazla siparişte yer alabilir)"
+
     kategoriler {
         int id PK
-        string kategori_adi
+        varchar kategori_adi
     }
+
+    kullanicilar {
+        int id PK
+        varchar ad_soyad
+        varchar eposta
+        varchar telefon
+        varchar sifre
+        enum rol
+        text adres
+        decimal bakiye
+        enum durum
+    }
+
     urunler {
         int id PK
         int kategori_id FK
-        string album_adi
-        string sanatci
+        varchar album_adi
+        varchar sanatci
         decimal fiyat
         int stok
-        string resim
-        string durum
+        varchar resim
+        enum durum
         tinyint populer
+        text aciklama
     }
+
     sepetler {
         int id PK
         int kullanici_id FK
         datetime guncelleme_tarihi
     }
+
     sepet_icerik {
         int id PK
         int sepet_id FK
         int urun_id FK
         int adet
     }
+
     siparisler {
         int id PK
         int kullanici_id FK
         decimal toplam_tutar
-        string kargo_adresi
-        string odeme_yontemi
-        string durum
-        string siparis_asamasi
+        text kargo_adresi
+        varchar odeme_yontemi
+        varchar durum
         datetime tarih
         decimal bakiye_kullanilan
         decimal karttan_odenen
+        varchar siparis_asamasi
     }
+
     siparis_detaylari {
         int id PK
         int siparis_id FK
@@ -189,72 +182,119 @@ erDiagram
         int adet
         decimal birim_fiyat
     }
- 
-    kullanicilar ||--o{ sepetler : "sahip olur"
-    kullanicilar ||--o{ siparisler : "verir"
-    kategoriler ||--o{ urunler : "içerir"
-    sepetler ||--o{ sepet_icerik : "barındırır"
-    urunler ||--o{ sepet_icerik : "eklenir"
-    siparisler ||--o{ siparis_detaylari : "içerir"
-    urunler ||--o{ siparis_detaylari : "satılır"
-```
- 
+
+    mesajlar {
+        int id PK
+        varchar ad_soyad
+        varchar eposta
+        varchar konu
+        text mesaj
+        tinyint okundu
+        datetime tarih
+    }
+````
 ---
+
+###  UML Sınıf Diyagramı
  
----
-##  Kurulum
+```mermaid
+classDiagram
+    class Kullanicilar {
+        +int id PK
+        +varchar ad_soyad
+        +varchar eposta
+        +varchar telefon
+        +varchar sifre
+        +enum rol
+        +text adres
+        +decimal bakiye
+        +enum durum
+    }
  
-### Gereksinimler
+    class Kategoriler {
+        +int id PK
+        +varchar kategori_adi
+    }
  
-- PHP 8.1+
-- MySQL 5.7+ veya MariaDB 10.4+
-- Apache (mod_rewrite aktif)
-- XAMPP / WAMP / Laragon önerilir
-### Adımlar
+    class Urunler {
+        +int id PK
+        +int kategori_id FK
+        +varchar album_adi
+        +varchar sanatci
+        +decimal fiyat
+        +int stok
+        +varchar resim
+        +enum durum
+        +tinyint populer
+        +text aciklama
+    }
  
-**1. Projeyi klonlayın**
+    class Sepetler {
+        +int id PK
+        +int kullanici_id FK
+        +datetime guncelleme_tarihi
+    }
  
-```bash
-git clone https://github.com/kullanici-adi/BeatSphere.git
+    class SepetIcerik {
+        +int id PK
+        +int sepet_id FK
+        +int urun_id FK
+        +int adet
+    }
+ 
+    class Siparisler {
+        +int id PK
+        +int kullanici_id FK
+        +decimal toplam_tutar
+        +text kargo_adresi
+        +varchar odeme_yontemi
+        +varchar durum
+        +datetime tarih
+        +decimal bakiye_kullanilan
+        +decimal karttan_odenen
+        +varchar siparis_asamasi
+    }
+ 
+    class SiparisDetaylari {
+        +int id PK
+        +int siparis_id FK
+        +int urun_id FK
+        +int adet
+        +decimal birim_fiyat
+    }
+ 
+    class Mesajlar {
+        +int id PK
+        +varchar ad_soyad
+        +varchar eposta
+        +varchar konu
+        +text mesaj
+        +tinyint okundu
+        +datetime tarih
+    }
+ 
+    Kullanicilar "1" --> "N" Sepetler : sahip olur
+    Kullanicilar "1" --> "N" Siparisler : verir
+    Kategoriler "1" --> "N" Urunler : içerir
+    Sepetler "1" --> "N" SepetIcerik : barındırır
+    Urunler "1" --> "N" SepetIcerik : yer alır
+    Siparisler "1" --> "N" SiparisDetaylari : içerir
+    Urunler "1" --> "N" SiparisDetaylari : yer alır
 ```
  
-> Ya da ZIP olarak indirip `htdocs/` (XAMPP) veya `www/` (WAMP) klasörüne çıkartın.
+#### Controller — Model Eşleşmesi
  
-**2. Veritabanını oluşturun**
+| Controller | Model(ler) | Açıklama |
+|---|---|---|
+| `Auth` | `KullaniciModel` | Giriş, kayıt, çıkış |
+| `Home` | `UrunModel`, `KategoriModel` | Ana sayfa, hakkımızda, iletişim |
+| `UrunController` | `UrunModel`, `KategoriModel` | Kategori listesi, ürün detayı |
+| `SepetController` | `SepetModel`, `SepetIcerikModel`, `UrunModel` | Sepet işlemleri |
+| `SiparisController` | `SiparisModel`, `SiparisDetayModel`, `SepetModel`, `UrunModel` | Ödeme, sipariş, iptal, fatura |
+| `ProfilController` | `KullaniciModel` | Profil güncelleme, şifre, hesap dondur |
+| `Admin` | Tüm modeller | Yönetim paneli |
  
-phpMyAdmin veya MySQL komut satırında `beatsphere_db` adlı bir veritabanı oluşturun ve gerekli tabloları import edin:
- 
-```sql
-CREATE DATABASE beatsphere_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-```
- 
-**3. `.env` dosyasını düzenleyin**
- 
-Proje kök dizinindeki `.env` dosyasını açıp aşağıdaki alanları kendi ortamınıza göre güncelleyin:
- 
-```env
-CI_ENVIRONMENT = development
- 
-app.baseURL = 'http://localhost/BeatSphere/public/'
- 
-database.default.hostname = localhost
-database.default.database = beatsphere_db
-database.default.username = root
-database.default.password = 
-database.default.DBDriver = MySQLi
-database.default.port = 3306
-```
- 
-**4. Apache mod_rewrite aktif olduğundan emin olun**
- 
-`httpd.conf` dosyasında `mod_rewrite` modülünün yorum satırından çıkarılmış olduğunu kontrol edin.
- 
-**5. Uygulamayı açın**
- 
-```
-http://localhost/BeatSphere/public/
-```
- 
+
 ---
  
 ##  Veritabanı Tabloları
@@ -268,6 +308,7 @@ http://localhost/BeatSphere/public/
 | `sepet_icerik` | Sepetteki ürün kalemleri (adet, urun_id) |
 | `siparisler` | Sipariş kayıtları (kullanici_id, toplam tutar, aşama, tarih) |
 | `siparis_detay` | Sipariş satır detayları |
+| `mesajlar` | İletişim formu mesajları (ad_soyad, eposta, konu, mesaj, okundu, tarih) |
  
 ---
  
@@ -287,6 +328,7 @@ http://localhost/BeatSphere/public/
 -  Ürün ekleme, düzenleme, silme; durum ve popülerlik değiştirme
 -  Kullanıcı ekleme, düzenleme, silme; durum değiştirme
 -  Sipariş listeleme, onaylama ve aşama ilerleme
+-  İletişim formundan gelen mesajları görüntüleme, okundu işaretleme ve silme 
 ---
  
 ##  Yetkilendirme
